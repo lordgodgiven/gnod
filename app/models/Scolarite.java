@@ -7,10 +7,10 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 
 /*
- * Cette classe représente l'acteur personnel de scolarité
+ * Cette classe represente l'acteur personnel de scolarite
  */
 @Entity
-public class Scolarite extends Model{
+public class Scolarite extends Model {
 	/**
 	 * 
 	 */
@@ -18,16 +18,18 @@ public class Scolarite extends Model{
 
 	@MaxSize(50)
 	@Required
-	 public String login;
-	 
+	public String login;
+
 	@MaxSize(50)
-	 @Required
-	 public String password;
+	@Required
+	public String password;
 
 	public Scolarite(String login, String password) {
 		this.login = login;
 		this.password = password;
 	}
-	
-	
+
+	public static Scolarite connect(String login, String password) {
+		return find("byLoginAndPassword", login, password).first();
+	}
 }

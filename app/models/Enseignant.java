@@ -1,4 +1,5 @@
 package models;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import javax.persistence.OneToMany;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Model;
+
 @Entity
 public class Enseignant extends Model {
 	/**
@@ -19,22 +21,22 @@ public class Enseignant extends Model {
 	@MaxSize(50)
 	@Required
 	public String login;
-	
+
 	@MaxSize(50)
 	@Required
 	public String password;
-	
+
 	@MaxSize(50)
 	@Required
 	public String nom;
-	
+
 	@MaxSize(100)
 	@Required
 	public String prenom;
-	
-	@ Required
+
+	@Required
 	public Date dateNaissance;
-	
+
 	@OneToMany(cascade = CascadeType.PERSIST)
 	public Set<Cours> cours;
 
@@ -45,6 +47,10 @@ public class Enseignant extends Model {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
-	} 
+	}
+
+	public static Enseignant connect(String login, String password) {
+		return find("byLoginAndPassword", login, password).first();
+	}
 
 }
