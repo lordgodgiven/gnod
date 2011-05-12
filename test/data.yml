@@ -1,7 +1,6 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
-# User(bob):
-#   email: bob@gmail.com
+# Scolarite(initScol):
+#   login: initScol
 #   password: secret
-#   fullname: Bob

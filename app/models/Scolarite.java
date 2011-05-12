@@ -1,5 +1,7 @@
 package models;
 
+import javax.persistence.Entity;
+
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -7,6 +9,7 @@ import play.db.jpa.Model;
 /*
  * Cette classe représente l'acteur personnel de scolarité
  */
+@Entity
 public class Scolarite extends Model{
 	/**
 	 * 
@@ -20,4 +23,11 @@ public class Scolarite extends Model{
 	@MaxSize(50)
 	 @Required
 	 public String password;
+
+	public Scolarite(String login, String password) {
+		this.login = login;
+		this.password = password;
+	}
+	
+	
 }

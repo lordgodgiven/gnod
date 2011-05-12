@@ -41,6 +41,15 @@ public class Etudiant extends Model {
 	 @ManyToOne
 	 public Classe classe;
 	 
-	 @OneToMany(mappedBy="Etudiant", cascade=CascadeType.ALL)
+	 @OneToMany(mappedBy="etudiant", cascade=CascadeType.ALL)
 	 public Set<Note> notes;	 
+	 
+	 public Etudiant(String prenom, String nom, String login, 
+			 String password, Date dateNaissance) {
+		 this.prenom = prenom;
+		 this.nom = nom;
+		 this.login = login;
+		 this.password = password;
+		 this.dateNaissance = dateNaissance;		 
+	 }
 }

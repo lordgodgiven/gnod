@@ -26,4 +26,10 @@ public class Note extends Model {
 	@MaxSize(4)
 	@Required
 	public Integer note;
+
+	public Note(Etudiant etudiant, Examen examen, Integer note) {
+		this.etudiant = etudiant;
+		this.examen = examen;
+		this.note = note;
+	}
 }
