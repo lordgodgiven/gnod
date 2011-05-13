@@ -43,22 +43,23 @@ public class Application extends Controller {
 	}
 
 	public static void identifiate(String login, String password) {
-		Etudiant etudiant = Etudiant.find("byLogin", login).first();
+		Etudiant etudiant = Etudiant.connect(login, password);
 		if (etudiant == null) {
-			Enseignant enseignant = Enseignant.find("byLogin",
-					login).first();
+			Enseignant enseignant = Enseignant.connect(login, password);
 			if (enseignant == null) {
-				Scolarite scolarite = Scolarite.find("byLogin",
-						login).first();
+				Scolarite scolarite = Scolarite.connect(login, password);
 				if (scolarite == null) {
 					// Page d'erreur : utilisateur inconnu
 					render("Application/index.html");
 				} else {
+					System.out.println("User de type scolarite");
 					renderArgs.put("user", scolarite.login);
-					render("Scolarite/index.html");
+					//render("Scolarite/index.html");
+					ScolariteController.index();
 				}
 			} else {
 				renderArgs.put("user", enseignant.login);
+				render("Enseignant/index.html");
 			}
 		} else {
 			renderArgs.put("user", etudiant.login);
