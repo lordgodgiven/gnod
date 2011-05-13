@@ -4,6 +4,7 @@ import models.Enseignant;
 import models.Etudiant;
 import models.Scolarite;
 import controllers.Secure.Security;
+import play.data.validation.Required;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -27,15 +28,12 @@ public class Application extends Controller {
 						System.out.println("User inconnu");
 					} else {
 						renderArgs.put("user", scolarite.login);
-						Application.indexScolarite();
 					}
 				} else {
 					renderArgs.put("user", enseignant.login);
-					Application.indexEnseignant();
 				}
 			} else {
 				renderArgs.put("user", etudiant.login);
-				Application.indexEtudiant();
 			}
 		}
 	}
@@ -44,15 +42,27 @@ public class Application extends Controller {
 		render();
 	}
 
-	public static void indexEtudiant() {
-		render();
-	}
-
-	public static void indexEnseignant() {
-		render();
-	}
-
-	public static void indexScolarite() {
-		render();
+	public static void identifiate(String login, String password) {
+		Etudiant etudiant = Etudiant.find("byLogin", login).first();
+		if (etudiant == null) {
+			Enseignant enseignant = Enseignant.find("byLogin",
+					login).first();
+			if (enseignant == null) {
+				Scolarite scolarite = Scolarite.find("byLogin",
+						login).first();
+				if (scolarite == null) {
+					// Page d'erreur : utilisateur inconnu
+					render("Application/index.html");
+				} else {
+					renderArgs.put("user", scolarite.login);
+					render("Scolarite/index.html");
+				}
+			} else {
+				renderArgs.put("user", enseignant.login);
+			}
+		} else {
+			renderArgs.put("user", etudiant.login);
+			render("Etudiant/index.html");
+		}
 	}
 }
