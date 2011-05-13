@@ -19,6 +19,6 @@ public class ScolariteController extends Controller {
 	
 	public static void index() {
 		System.out.println("Entree dans la zone scolarité"+renderArgs.get("user"));
-		render();
+		render("scolarite/index.html");
 	}
 }
