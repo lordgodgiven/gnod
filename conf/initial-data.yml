@@ -6,14 +6,14 @@ Scolarite(bob):
     password:       secret
     isAdmin:        true
     
-Scolarite(marysC):
+Scolarite(marysc):
     login:          marysc
     password:       secret
     
-Enseignant(viardotS):
+Enseignant(viardots):
     nom :           Viardot
     prenom :        Sebastien
-    login :         viardotS
+    login :         viardots
     password :      secret
     dateNaissance : 2000-06-14
     
@@ -22,7 +22,7 @@ Classe(classe1):
 Etudiant(etudiant1):
     nom :           Dulac
     prenom :        Frank
-    login :         Dulacf
+    login :         dulacf
     password :      secret
     dateNaissance : 1989-03-19
     classe :        classe1
@@ -30,7 +30,7 @@ Etudiant(etudiant1):
 Etudiant(etudiant2):
     nom :      Montaulont
     prenom :   Laurent
-    login :    Montaul
+    login :    montaul
     password : secret
     dateNaissance : 1989-03-19
     classe :   classe1
@@ -39,7 +39,7 @@ Matiere(progWeb):
     nom : Programmation web
 
 Cours(cours1):
-    enseignant :  viardotS
+    enseignant :  viardots
     matiere :     progWeb
     classe :      classe1
 
