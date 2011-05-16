@@ -16,36 +16,46 @@
     	<div id="wrapper">
     		<!--container starts-->
 	    	<div id="container">
-	    		<div id="rtcontent">
-	                <!--head starts-->
-               		<div class="head">&{'application.title'}</div>
-            		<!--hdlogo starts-->
-               		<div id="hdlogo" align="center">
-               		<img src="images/topbanner.jpg" alt=""/>
-               	</div>
-                
-                <div id="menulinks">
-	            	<ul>
-    	    	        <li><a href="@{Application.index()}">&{'application.home'}</a></li>
-						#{if status == 'connected'}
-								<li>
-									<a href="@{Application.disconnect()}">&{'application.deconnection'}</a>
-								</li>
-						#{/if}
-	                </ul>
-    	        </div>
-		        #{doLayout /}
-		        
-		        <!--footer starts-->
-            	<div id="footer">
-                	<div class="copy">
-                    &copy; 2011 Ensimag
-                    </div>
-                    <div class="copy">
-                        <span>&{'application.authors'}</span>
-                    </div>
-                </div>
-           		<!--footer ends-->
+			
+				<div id="ltcontent">
+					<!--hdlogo starts-->
+					<div id="hdlogo" align="center">
+						<img src="images/topbanner.jpg" alt=""/>
+					</div>
+					
+
+					 <div class="ltgap"></div>
+					         
+					<!--about ends--> 					
+				<!-- Fin de l'ajout -->
+				</div>
+				<div id="rtcontent">				               
+					<!--head starts-->
+					<div class="head">&{'application.title'}</div>					
+					<div id="menulinks">
+						<ul>
+							<li><a href="@{Application.index()}">&{'application.home'}</a></li>
+							#{if status == 'connected'}
+									<li>
+										<a href="@{Application.disconnect()}" class="scrcast">&{'application.deconnection'}</a>
+									</li>
+							#{/if}
+						</ul>
+					</div>
+					#{doLayout /}
+				</div>
+				<div class="clear"></div>
+				<br />				
+				<!--footer starts-->
+				<div id="footer">
+					<div class="copy">
+					&copy; 2011 Ensimag
+					</div>
+					<div class="copy">
+						<span>&{'application.authors'}</span>
+					</div>
+				</div>
+				<!--footer ends-->
 			</div>
 		</div>
     </body>

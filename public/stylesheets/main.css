@@ -40,7 +40,7 @@ img{border:0;}
 .head{
 	font:58px Verdana, Geneva, sans-serif;
 	color:#FFF;
-	margin-top: 10px;
+	margin-top: 73px;
 }
 
 .tagln{
@@ -384,11 +384,13 @@ img{border:0;}
 /*footer*/
 #footer{
 	border-top:1px dashed #b7b4a3;
-	margin-top: 70px;
+	margin-top: 50px;
+	margin-bottom: 50px;
 	background-color:#ebe8d9;
 	height:95px;
 	margin-left:25px;
 	margin-right:45px;
+	text-align:center;
 }
 
 .copy{
