@@ -41,69 +41,35 @@ public class Application extends Controller {
 				renderArgs.put("user", etudiant.login);
 			}
 			renderArgs.put("status", "connected");
-			System.out.println("status a connected");
 		} else {
 			typeUser = null;
-			System.out.println("status a disconnected");
 			renderArgs.put("status", "disconnected");
 		}
 	}
 
 	public static void index() {
-		System.out.println("index");
 		render();
 	}
-	
+	/*
+	 * Utilisateur n'est plus loggé
+	 */
 	public static void disconnect() {
-		System.out.println("disconnect");
-		//renderArgs.put("status", "disconnected");
-		//renderArgs.put("user", null);
-		//renderArgs.data.clear();
 		renderArgs = null;
 		typeUser = null;
 		try {
 			Secure.logout();
-			if(Security.isConnected()) {
-				System.out.println("déconnection nok");
-			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-		Application.index();
 	}
 
-	public static void identifiate(String login, String password) {
-		Etudiant etudiant = Etudiant.connect(login, password);
-		if (etudiant == null) {
-			Enseignant enseignant = Enseignant.connect(login, password);
-			if (enseignant == null) {
-				Scolarite scolarite = Scolarite.connect(login, password);
-				if (scolarite == null) {
-					// Page d'erreur : utilisateur inconnu
-					render("Application/index.html");
-				} else {
-					System.out.println("User de type scolarite");
-					renderArgs.put("user", scolarite.login);
-					//render("Scolarite/index.html");
-					ScolariteController.index();
-				}
-			} else {
-				renderArgs.put("user", enseignant.login);
-				render("Enseignant/index.html");
-			}
-		} else {
-			renderArgs.put("user", etudiant.login);
-			render("Etudiant/index.html");
-		}
-	}
-	
 	@After
 	static void verifConnectedUser() {
 		if (typeUser != null) {
 			if(typeUser.equals("etudiant"))
-				typeUser = typeUser;
+				EtudiantController.index();
 			if(typeUser.equals("enseignant"))
-				typeUser = typeUser;
+				EnseignantController.index();
 			if (typeUser.equals("scolarite"))
 				ScolariteController.index();
 		}

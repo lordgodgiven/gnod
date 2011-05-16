@@ -2,34 +2,3 @@
 #{set title:'Home' /}
 
 Welcome ${user}!
-
-#{form @Application.identifiate()}
- 
-    #{ifErrors}
-        <p class="error">
-            Please correct these errors.
-        </p>
-    #{/ifErrors}
-     
-    <p>
-        #{field 'title'}
-        <label>Login:</label>
-        <input type="text" name="login" id="login"
-            value="login" />
-  
-        #{/field}
-    </p>
- 
-    <p>
-        #{field 'content'}
-        <label>Password :</label>
-        <input type="text" name="password" id="password"
-            value="password" />
-        #{/field}
-    </p>
-    
-    <p>
-        <input type="submit" value="Try to connect the user" />
-    </p>
-    
-#{/form}

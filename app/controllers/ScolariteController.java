@@ -11,14 +11,11 @@ public class ScolariteController extends Controller {
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
 			Scolarite scolarite = Scolarite.find("byLogin",
-					//Security.connected()).first();
 					Security.connected()).first();
 			if (scolarite == null) {
 				System.out.println("User null !!!!");
 				render("Application/index.html");
-				
 			}
-			System.out.println("User");
 			renderArgs.put("user", scolarite.login);
 			renderArgs.put("status", "connected");
 		} else {
@@ -27,7 +24,6 @@ public class ScolariteController extends Controller {
 	}
 	
 	public static void index() {
-		System.out.println("Entree dans la zone scolarité"+renderArgs.get("user"));
 		render("scolarite/index.html");
 	}
 }
