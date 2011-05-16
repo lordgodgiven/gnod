@@ -1,3 +1,7 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
+application.title=gnod
+application.deconnection=Déconnexion
+application.home=Accueil
+application.authors=par Romain DESTENAY et Julien OUDOT

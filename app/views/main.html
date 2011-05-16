@@ -1,29 +1,52 @@
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-        #{get 'moreScripts' /}
-    </head>
-    <body>
-    	<div >
-	    	gnod
-	    </div>
-   		#{if status == 'connected'}
-		    <div>
-				<ul>
-				    <li>
-				        <a href="@{Application.disconnect()}">Déconnexion</a>
-				    </li>
-				</ul>
-	        </div>
-		#{/if}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-        #{doLayout /}
+		<title>GNODE</title>
+		<link rel="stylesheet" type="text/css" media="screen" 
+            href="@{'/public/stylesheets/main.css'}" />
+		#{get 'moreStyles' /}
+		<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+		#{get 'moreScripts' /}
+	</head>
+
+
+    <body>
+    	<div id="wrapper">
+    		<!--container starts-->
+	    	<div id="container">
+	    		<div id="rtcontent">
+	                <!--head starts-->
+               		<div class="head">&{'application.title'}</div>
+            		<!--hdlogo starts-->
+               		<div id="hdlogo" align="center">
+               		<img src="images/topbanner.jpg" alt=""/>
+               	</div>
+                
+                <div id="menulinks">
+	            	<ul>
+    	    	        <li><a href="@{Application.index()}">&{'application.home'}</a></li>
+						#{if status == 'connected'}
+								<li>
+									<a href="@{Application.disconnect()}">&{'application.deconnection'}</a>
+								</li>
+						#{/if}
+	                </ul>
+    	        </div>
+		        #{doLayout /}
+		        
+		        <!--footer starts-->
+            	<div id="footer">
+                	<div class="copy">
+                    &copy; 2011 Ensimag
+                    </div>
+                    <div class="copy">
+                        <span>&{'application.authors'}</span>
+                    </div>
+                </div>
+           		<!--footer ends-->
+			</div>
+		</div>
     </body>
 </html>
