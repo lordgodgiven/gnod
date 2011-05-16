@@ -13,7 +13,16 @@ public class ScolariteController extends Controller {
 			Scolarite scolarite = Scolarite.find("byLogin",
 					//Security.connected()).first();
 					Security.connected()).first();
-			//renderArgs.put("user", renderArgs.get("user"));
+			if (scolarite == null) {
+				System.out.println("User null !!!!");
+				render("Application/index.html");
+				
+			}
+			System.out.println("User");
+			renderArgs.put("user", scolarite.login);
+			renderArgs.put("status", "connected");
+		} else {
+			renderArgs.put("status", "disconnected");
 		}
 	}
 	

@@ -5,13 +5,15 @@ import models.Etudiant;
 import models.Scolarite;
 import controllers.Secure.Security;
 import play.data.validation.Required;
+import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
 @With(Secure.class)
 public class Application extends Controller {
-
+	private static String typeUser;
+	
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
@@ -27,19 +29,47 @@ public class Application extends Controller {
 						// Page d'erreur : utilisateur inconnu
 						System.out.println("User inconnu");
 					} else {
+						typeUser = new String("scolarite");
 						renderArgs.put("user", scolarite.login);
 					}
 				} else {
+					typeUser = new String("enseignant");
 					renderArgs.put("user", enseignant.login);
 				}
 			} else {
+				typeUser = new String("etudiant");
 				renderArgs.put("user", etudiant.login);
 			}
+			renderArgs.put("status", "connected");
+			System.out.println("status a connected");
+		} else {
+			typeUser = null;
+			System.out.println("status a disconnected");
+			renderArgs.put("status", "disconnected");
 		}
 	}
 
-	public static void index(String typeUser) {
+	public static void index() {
+		System.out.println("index");
 		render();
+	}
+	
+	public static void disconnect() {
+		System.out.println("disconnect");
+		//renderArgs.put("status", "disconnected");
+		//renderArgs.put("user", null);
+		//renderArgs.data.clear();
+		renderArgs = null;
+		typeUser = null;
+		try {
+			Secure.logout();
+			if(Security.isConnected()) {
+				System.out.println("déconnection nok");
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		Application.index();
 	}
 
 	public static void identifiate(String login, String password) {
@@ -66,4 +96,17 @@ public class Application extends Controller {
 			render("Etudiant/index.html");
 		}
 	}
+	
+	@After
+	static void verifConnectedUser() {
+		if (typeUser != null) {
+			if(typeUser.equals("etudiant"))
+				typeUser = typeUser;
+			if(typeUser.equals("enseignant"))
+				typeUser = typeUser;
+			if (typeUser.equals("scolarite"))
+				ScolariteController.index();
+		}
+	}
+	
 }

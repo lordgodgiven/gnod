@@ -20,7 +20,8 @@ public class Security extends Secure.Security {
         } else {
         	identifie = false;
         }
-    	
+        if (identifie)
+        	System.out.println("PAssage dans le security " +typeUser);
     	return identifie;
     }
     

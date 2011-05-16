@@ -11,6 +11,19 @@
         #{get 'moreScripts' /}
     </head>
     <body>
+    	<div >
+	    	gnod
+	    </div>
+   		#{if status == 'connected'}
+		    <div>
+				<ul>
+				    <li>
+				        <a href="@{Application.disconnect()}">Déconnexion</a>
+				    </li>
+				</ul>
+	        </div>
+		#{/if}
+		
         #{doLayout /}
     </body>
 </html>
