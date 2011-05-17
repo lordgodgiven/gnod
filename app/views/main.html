@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-		<title>GNODE</title>
+		<title>GNOD</title>
 		<link rel="stylesheet" type="text/css" media="screen" 
             href="@{'/public/stylesheets/main.css'}" />
 		#{get 'moreStyles' /}
@@ -22,12 +22,7 @@
 					<div id="hdlogo" align="center">
 						<img src="images/topbanner.jpg" alt=""/>
 					</div>
-					
-
 					 <div class="ltgap"></div>
-					         
-					<!--about ends--> 					
-				<!-- Fin de l'ajout -->
 				</div>
 				<div id="rtcontent">				               
 					<!--head starts-->
@@ -41,8 +36,13 @@
 									</li>
 							#{/if}
 						</ul>
+					</div>	
+					<div class="document">
+						<div>&nbsp;</div>
+						<div class="dcontent">
+							#{doLayout /}
+						</div>
 					</div>
-					#{doLayout /}
 				</div>
 				<div class="clear"></div>
 				<br />				
