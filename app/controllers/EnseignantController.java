@@ -33,17 +33,11 @@ public class EnseignantController extends Controller {
 		}
 	}
 
-	public static void index() {
-		render("enseignant/index.html");
-	}
 
-	/**
-	 * Permet de recuperer l'enseignant connecte afin d'afficher les cours dont il est charge
-	 */
-	public static void afficheCours() {
-		Enseignant enseignant = Enseignant
-				.find("byLogin", Security.connected()).first();
-		render(enseignant);
+	public static void index() {
+		Enseignant enseignant = Enseignant.find("byLogin", Security.connected()).first();
+		// Permet d'afficher sur la page d'accueil les cours de l'enseignant
+		render("enseignant/index.html", enseignant);
 	}
 	
 	/**
@@ -82,7 +76,7 @@ public class EnseignantController extends Controller {
 	 
 	 
 		/**
-		 * Affiche les résultats pour un cours selectionne. les résultats sont modifiables
+		 * Affiche les résultats pour un examen selectionne. les résultats sont modifiables
 		 * si la validation n'a pas été demandée. 
 		 * A partie de l'examen, on peut trouver les notes par acces direct dans la vue
 		 * 
@@ -92,7 +86,7 @@ public class EnseignantController extends Controller {
 		public static void afficheResultats(long id) {
 			Examen examen = Examen.findById(id);
 		    String randomID = Codec.UUID();
-		    render(examen, randomID);
+		    render("Enseignant/notesForm.html", examen, randomID);
 		}
 		
 		/**
