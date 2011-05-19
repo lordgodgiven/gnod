@@ -1,5 +1,7 @@
 package controllers;
 
+import groovyjarjarantlr.collections.List;
+
 import java.util.Date;
 
 import models.Cours;
@@ -99,7 +101,7 @@ public class EnseignantController extends Controller {
 		 */
 		// TODO : gérer le nombre dynamique de note a entrer
 		public static void modifResultats(long id,
-				@Required(message="A note is required") Integer valNote, 
+				List valNotes, 
 		        String randomID) {
 			Examen examen = Examen.findById(id);
 			if(validation.hasErrors()) {
@@ -109,9 +111,11 @@ public class EnseignantController extends Controller {
 			if (examen.noteValidee) {
 				flash.error("Vos notes sont déjà validées");
 		    } else if (examen.notes != null && examen.notes.size() > 0){
+		    	int cpt = 0;
 		    	for (Note note : examen.notes) {
-		    		note.note = valNote;
+		    		note.note = (Integer) valNotes.elementAt(cpt);
 		    		note.save();
+		    		cpt++;
 		    	}
 		    } else {
 		    	// Les notes sont a créer, comment renseigner l'etudiant ?
