@@ -1,0 +1,7 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+application.title=gestion des notes
+application.deconnection=Déconnexion
+application.home=Accueil
+application.authors=par Romain DESTENAY et Julien OUDOT
