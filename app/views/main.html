@@ -26,7 +26,12 @@
 				</div>
 				<div id="rtcontent">				               
 					<!--head starts-->
-					<div class="head">&{'application.title'}</div>					
+					<div class="head">&{'application.title'}</div>
+					#{if status == 'connected'}
+						<div class="tagln">
+							<ul> ${prenom} ${nom} est connecté </ul>
+						</div>	
+					#{/if}					
 					<div id="menulinks">
 						<ul>
 							<li><a href="@{Application.index()}">&{'application.home'}</a></li>
