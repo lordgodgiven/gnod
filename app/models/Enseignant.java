@@ -30,7 +30,7 @@ public class Enseignant extends Model {
 	@Required
 	public String nom;
 
-	@MaxSize(100)
+	@MaxSize(50)
 	@Required
 	public String prenom;
 
