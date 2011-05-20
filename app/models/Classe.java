@@ -10,11 +10,6 @@ import play.db.jpa.Model;
 @Entity
 public class Classe extends Model {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5380245769176494375L;
-	
 	@OneToMany(mappedBy = "classe", cascade = CascadeType.ALL)
 	public Set<Etudiant> etudiant;
 	
@@ -24,6 +19,6 @@ public class Classe extends Model {
 	public Classe() {
 	}
 	/*
-	 * Méthode pour générer le fichier XML du flux RSS
+	 * Methode pour generer le fichier XML du flux RSS
 	 */
 }

@@ -11,11 +11,6 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 @Entity
 public class Matiere extends Model {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4111153225748967659L;
-	
 	@Required 
 	@MaxSize(100)
 	public String nom;
