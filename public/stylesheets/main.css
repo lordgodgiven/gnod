@@ -20,13 +20,12 @@ img{border:0;}
 /*left contentbox*/
 #ltcontent{
 	float:left;
-	width:35%;
+	width:50px;
 }
 
 /*right contentbox*/
 #rtcontent{
-	float:right;
-	width:65%;
+	float:left;
 }
 
 
@@ -40,7 +39,7 @@ img{border:0;}
 .head{
 	font:58px Verdana, Geneva, sans-serif;
 	color:#FFF;
-	margin-top: 73px;
+	margin-top: -05px;
 }
 
 .tagln{
@@ -168,7 +167,7 @@ img{border:0;}
 }
 
 .gap{
-	margin-top:40px;	
+	margin-top:40px;
 }
 
 .ltgap{

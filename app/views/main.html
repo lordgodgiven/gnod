@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		
-		<title>GNOD</title>
+		<title>GNOD : Gestion des notes</title>
 		<link rel="stylesheet" type="text/css" media="screen" 
             href="@{'/public/stylesheets/main.css'}" />
 		#{get 'moreStyles' /}
@@ -35,6 +35,8 @@
 					<div id="menulinks">
 						<ul>
 							<li><a href="@{Application.index()}">&{'application.home'}</a></li>
+							
+							#{menu/}
 							#{if status == 'connected'}
 									<li>
 										<a href="@{Application.disconnect()}" class="scrcast">&{'application.deconnection'}</a>
