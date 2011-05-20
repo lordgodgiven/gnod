@@ -1,6 +1,8 @@
 package models;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
@@ -10,11 +12,9 @@ import play.db.jpa.Model;
  * Cette classe represente l'acteur personnel de scolarite
  */
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(
+		columnNames = { "login"} ))
 public class Scolarite extends Model {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -826971617993218396L;
 
 	@MaxSize(50)
 	@Required

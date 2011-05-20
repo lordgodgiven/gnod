@@ -9,12 +9,6 @@ import play.db.jpa.Model;
 
 @Entity
 public class Note extends Model {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5496021554168238796L;
-
 	@ManyToOne
 	@Required
 	public Etudiant etudiant;

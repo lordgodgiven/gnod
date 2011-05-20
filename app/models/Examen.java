@@ -12,12 +12,7 @@ import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 @Entity
-public class Examen extends Model{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3696608795108901374L;
-	
+public class Examen extends Model{	
 	@MaxSize(100)
 	@Required
 	public String nom;
