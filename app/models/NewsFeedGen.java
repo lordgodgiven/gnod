@@ -32,14 +32,16 @@ import org.jdom.output.XMLOutputter;
 </rss>
 */
 public class NewsFeedGen {
-	private static String BALISE_RSS = new String("rss");
-	private static String BALISE_CHANNEL = new String("channel");
-	private static String BALISE_TITLE = new String("title");
-	private static String BALISE_DESCR = new String("description");
-	private static String BALISE_LASTBUILD = new String("lastBuildDate");
-	private static String BALISE_LINK = new String("link");
-	private static String BALISE_ITEM = new String("item");
-	private static String BALISE_PUBDATE = new String("pubDate");
+	public static String BALISE_RSS = new String("rss");
+	public static String BALISE_CHANNEL = new String("channel");
+	public static String BALISE_TITLE = new String("title");
+	public static String BALISE_DESCR = new String("description");
+	public static String BALISE_LASTBUILD = new String("lastBuildDate");
+	public static String BALISE_LINK = new String("link");
+	public static String BALISE_ITEM = new String("item");
+	public static String BALISE_PUBDATE = new String("pubDate");
+	
+	public static String FORMAT_DATE = new String("EEE, dd MMM yyyy HH:mm:ss z");
 
 	/**
 	 * 
@@ -83,7 +85,7 @@ public class NewsFeedGen {
 					title1.setText("Flux RSS des nouvelles notes");
 					descr1.setText("Examen de la classe " +nomClasseEnseignant);
 				// Sinon est-il de type enseignant ?
-				} else if (nomFic.equals(".*Enseignant.*")) {
+				} else if (nomFic.matches(".*Enseignant.*")) {
 					title1.setText("Flux RSS des nouveaux examens à noter");
 					descr1.setText("Examen " +nomClasseEnseignant);
 
@@ -92,7 +94,7 @@ public class NewsFeedGen {
 				channel.addContent(descr1);
 				
 				// Renseigne la date de a facon qu'il faut pour le flux RSS
-				SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+				SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_DATE);
 				lastBuildDate.setText(formatter.format(new GregorianCalendar().getTime()));
 				channel.addContent(lastBuildDate);
 				// Dans tous les cas, l'utilisateur doit s'identifier
@@ -151,14 +153,16 @@ public class NewsFeedGen {
             // On ajoute la taille (et non pas taille + 1) car l'item a ajoute est deja ajoute a channel
             title.setText("Actualité n°" +(channel.getChildren(BALISE_ITEM).size()));
             descr.setText(message);
-            SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+            SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_DATE);
             pubDate.setText(formatter.format(new GregorianCalendar().getTime()));
             link.setText("http://localhost:9000");
             newItem.addContent(title);
             newItem.addContent(descr);
             newItem.addContent(pubDate);
             newItem.addContent(link);
-            System.out.println("everything is all right");
+            // MAJ de la derniere date de modification
+            Element lastBuildDate = channel.getChild(BALISE_LASTBUILD);
+            lastBuildDate.setText(pubDate.getText());
             try
 		      {
 			     //Affichage classique avec getPrettyFormat()
