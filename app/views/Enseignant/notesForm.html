@@ -3,3 +3,14 @@
 Accueil Enseignant :
 Connected as ${prenom} ${nom}!
 
+#{form @EnseignantController.modifResultats(post?.id)}
+    #{list valNotes, as:'note'}
+    	<p>
+	        #{field 'content'}
+	        <label>Saisir une note pour l'élève :</label>
+	        <textarea name="${field.note}" 
+	            class="${field.errorClass}">${post?.content}</textarea>
+	        #{/field}
+    	</p>
+    #{/list}
+#{/form}
