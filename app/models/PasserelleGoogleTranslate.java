@@ -32,7 +32,7 @@ public class PasserelleGoogleTranslate {
 	    if (OAuth.isVerifierResponse()) {
 	        // We got the verifier; 
 	        // now get the access tokens using the unauthorized tokens
-	        TokenPair tokens = OAuth.service(TWITTER).requestAccessToken(
+	    /*    TokenPair tokens = OAuth.service(TWITTER).requestAccessToken(
 	            getUser().getTokenPair()
 	        );
 	        // let's store them and go back to index
@@ -45,6 +45,7 @@ public class PasserelleGoogleTranslate {
 	    // we need to store them before continuing
 	    getUser().setTokenPair(tokens);
 	    // Redirect the user to the authorization page
-	    redirect(twitt.redirectUrl(tokens));
+	    redirect(twitt.redirectUrl(tokens));*/
+	    }
 	}
 }
