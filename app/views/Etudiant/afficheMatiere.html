@@ -9,6 +9,5 @@
 - Affiche la moyenne de la matière
 -->
 #{extends 'main.html' /}
-#{set title:'Détail Matière' /}
-Détail matière Etudiant :
-Connecté en tant que ${prenom} ${nom}!
+#{set title:'DetailMatiere' /}
+&{'application.etudiant.detail.matiere', cours.matiere.nom}

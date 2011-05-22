@@ -15,4 +15,6 @@ application.accueil.scolarite=Accueil scolarité :
 
 #clés des étudiants
 application.accueil.etudiant=Accueil étudiant :
-application.etudiant.diffusion.titre=Note de %1$s de la classe %2$s :
+#Syntaxe des clés à vérifier
+application.etudiant.diffusion.titre=Note de &{%s} de la classe &{%s} :
+application.etudiant.detail.matiere=Détail de &{%s} :
