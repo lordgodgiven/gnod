@@ -5,3 +5,4 @@ application.title=GNOD : Gestion des notes
 application.deconnection=Déconnexion
 application.home=Accueil
 application.authors=par Romain DESTENAY et Julien OUDOT
+application.user.connected=%d %d est connecté

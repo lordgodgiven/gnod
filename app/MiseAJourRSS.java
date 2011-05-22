@@ -44,8 +44,16 @@ public class MiseAJourRSS extends Job {
 					if (!examenTmp.noteValidee) {
 						Date today = new Date();
 						if (today.after(examenTmp.date)
-								&& !chercherExamen(enseignantTmp, examenTmp)) {
-								addExamen(enseignantTmp, examenTmp);
+								&& !NewsFeedGen.chercherExamen(enseignantTmp,
+										examenTmp)) {
+
+							NewsFeedGen.generate("public/rss/Enseignant_"
+									+ enseignantTmp.prenom + "_"
+									+ enseignantTmp.nom + ".xml", "Examens des"
+									+ examenTmp.cours.classe.nomClasse + "de"
+									+ examenTmp.cours.matiere.nom + "a noter",
+									new String(enseignantTmp.prenom + " "
+											+ enseignantTmp.nom));
 						}
 					}
 				}
@@ -75,7 +83,8 @@ public class MiseAJourRSS extends Job {
 							// est superieure a 1 an
 							if (date.after(calendar.getTime())) {
 								// Suppression de la ligne correspondant
-								supprimeExamen(classeTmp, examenTmp);
+								NewsFeedGen
+										.supprimeExamen(classeTmp, examenTmp);
 							}
 						}
 					}
@@ -85,114 +94,4 @@ public class MiseAJourRSS extends Job {
 			}
 		}
 	}
-
-	public static Date stringToDate(String sDate) {
-		Date d = null;
-		try {
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					NewsFeedGen.FORMAT_DATE);
-			ParsePosition pos = new ParsePosition(0);
-			d = formatter.parse(sDate, pos);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		return d;
-	}
-
-	/**
-	 * Supprime un news concernant l'examen
-	 * 
-	 * @param classe
-	 *            classe concerne par le flux a mettre a jour
-	 * @param examen
-	 *            examen a supprimer
-	 */
-	private static void supprimeExamen(Classe classe, Examen examen) {
-		// nom de fichier sous la forme Etudiant_1A ISI 2.xml
-		try {
-			Document document;
-			// On cree une instance de SAXBuilder
-			SAXBuilder sxb = new SAXBuilder();
-			File file = new File("Etudiant_" + classe.nomClasse + ".xml");
-			document = sxb.build(file);
-
-			Element racine = document.getRootElement();
-			Element channel = racine.getChild(NewsFeedGen.BALISE_CHANNEL);
-
-			if (stringToDate(
-					channel.getAttribute(NewsFeedGen.BALISE_LASTBUILD)
-							.getValue()).equals(examen.date)) {
-				file.delete();
-			} else {
-				List<Element> itemTmp = channel
-						.getChildren(NewsFeedGen.BALISE_ITEM);
-				for (Element elementTmp : itemTmp) {
-					// On compare la date de l'examen de l'item a celle de
-					// l'examen a supprimer
-					if (examen.date.equals(stringToDate(elementTmp.getChild(
-							NewsFeedGen.BALISE_PUBDATE).getText()))) {
-						elementTmp.removeContent();
-						// Recopie du fichier modifie
-						XMLOutputter sortie = new XMLOutputter(Format
-								.getPrettyFormat());
-						// écriture des infos spécifiés dans le file à retourner
-						sortie.output(document, new FileOutputStream(file
-								.getAbsolutePath()));
-					}
-				}
-			}
-		} catch (JDOMException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Permet de savoir si un examen est deja dans le fichier RSS ou pas
-	 * 
-	 * @param enseignant
-	 *            enseignant concerne par la recherche
-	 * @param examen
-	 *            examen recherche dans le fichier XML du flux RSS
-	 * @return vrai si l'examen est déjà dans le fichier et faux sinon
-	 */
-	private static boolean chercherExamen(Enseignant enseignant, Examen examen) {
-		File file = new File("Enseignant_" + enseignant.prenom + "_"
-				+ enseignant.nom + ".xml");
-		if (file.exists()) {
-			try {
-				Document document;
-				// On cree une instance de SAXBuilder
-				SAXBuilder sxb = new SAXBuilder();
-				document = sxb.build(file);
-				Element racine = document.getRootElement();
-				Element channel = racine.getChild(NewsFeedGen.BALISE_CHANNEL);
-				List<Element> lstItem = channel
-						.getChildren(NewsFeedGen.BALISE_ITEM);
-				for (Element itemTmp : lstItem) {
-					// Si le nom de l'examen apparaît dans la description de l'item, c'est que c'est l'examen
-					// que l'on cherche
-					if(itemTmp.getChild(NewsFeedGen.BALISE_DESCR).getText().matches(".*"+examen.nom+".*"))
-						return true;			
-				}
-			} catch (JDOMException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return false;
-		} else {
-			return false;
-		}
-	}
-	
-	private static void addExamen(Enseignant enseignant, Examen examen) {
-		NewsFeedGen.generate("public/rss/Enseignant_"+enseignant.prenom+"_"+enseignant.nom+".xml",
-				"Examens des" +examen.cours.classe.nomClasse+ "de" +examen.cours.matiere.nom+ "a noter", 
-				new String(enseignant.prenom+ " " +enseignant.nom));
-	}
-
 }
