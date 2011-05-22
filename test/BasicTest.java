@@ -1,12 +1,16 @@
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
 
 import models.Enseignant;
 import models.Etudiant;
+import models.Matiere;
 import models.NewsFeedGen;
 import models.Scolarite;
 
+import org.h2.constant.SysProperties;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -16,11 +20,16 @@ import org.junit.Test;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
+import controllers.Secure.Security;
+
 import play.test.Fixtures;
 import play.test.UnitTest;
 
 public class BasicTest extends UnitTest {
-
+	@Test
+	public void fullTest() {
+	    Fixtures.loadModels("data.yml");
+	}
 	@Test
 	public void creeEtChercheEnseignant() {
 		try {
@@ -66,10 +75,10 @@ public class BasicTest extends UnitTest {
 	
 	@Test
 	public void generateJDomEtudiant() {
-		NewsFeedGen.generate("Etudiant_1A_ISI_2.xml", "notes de SGBD disponibles", "1A ISI Gpe 1");
-		NewsFeedGen.generate("Etudiant_1A_ISI_2.xml", "notes de SAP disponibles", "1A ISI Gpe 1");
+		NewsFeedGen.generate("public/rss/Etudiant_1A ISI 2.xml", "notes de SGBD disponibles", "1A ISI Gpe 1");
+		NewsFeedGen.generate("public/rss/Etudiant_1A ISI 2.xml", "notes de SAP disponibles", "1A ISI Gpe 1");
 		
-		File fileEtudiant = new File("Etudiant_1A_ISI_2.xml");
+		File fileEtudiant = new File("public/rss/Etudiant_1A ISI 2.xml");
 		
 		
 		SAXBuilder sxb = new SAXBuilder();
@@ -92,8 +101,8 @@ public class BasicTest extends UnitTest {
 	
 	@Test
 	public void generateJDomEnseignant() {
-		NewsFeedGen.generate("Enseignant_Sebastien_Viardot.xml", "Examens des 1A ISI Gpe1 a noter", "Sebastien Viardot");
-		File fileEnseignant = new File("Enseignant_Sebastien_Viardot.xml");
+		NewsFeedGen.generate("public/rss/Enseignant_Sebastien Viardot.xml", "Examens des 1A ISI Gpe1 a noter", "Sebastien Viardot");
+		File fileEnseignant = new File("public/rss/Enseignant_Sebastien Viardot.xml");
 		SAXBuilder sxb = new SAXBuilder();
 		Document document = null;
 		try {
@@ -112,8 +121,29 @@ public class BasicTest extends UnitTest {
 		assertEquals(channel.getChildren("item").size(), 1);
 	}
 	
+	
+	@Test
+	public void calculMoyenne() {
+		List<Etudiant> etudiant = Etudiant.findAll();
+		Etudiant recherche = null;
+		assertNotNull(etudiant);
+		System.out.println("---------Etudiant-----------" +etudiant.size());
+		for (Etudiant etudianttmp : etudiant) {
+			System.out.println("Etudiant " +etudianttmp.login);
+			if (etudianttmp.login.equals("dulacf")) {
+				recherche = etudianttmp;
+			}
+		}
+		assertNotNull(recherche);
+		HashMap<Matiere, Float> moyennes = recherche.calculMoyenneDetailee();
+		assertEquals(moyennes.get(Matiere.find("byNom","Programmation web").first()), (Float)14f);
+		assertEquals(moyennes.get(Matiere.find("byNom","Langage C et compilation").first()), (Float)18f);
+		assertEquals(recherche.calculMoyenneGenerale(), (Float)17.2f);
+	}
 	 @Before
 	 public void setup() {
+		 new File("public/rss/Enseignant_Sebastien Viardot.xml").delete();
+		 new File("public/rss/Etudiant_1A ISI 2.xml").delete();
 		 Fixtures.deleteDatabase();
 	 }
 }

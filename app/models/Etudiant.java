@@ -1,6 +1,10 @@
 package models;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -55,5 +59,69 @@ public class Etudiant extends Model {
 
 	public static Etudiant connect(String login, String password) {
 		return find("byLoginAndPassword", login, password).first();
+	}
+	
+	/**
+	 * Calcul la moyenne generale d'un etudiant
+	 * @return la valeur de cette moyenne
+	 */
+	public Float calculMoyenneGenerale() {
+		int cptCoefficient = 0, totalNote = 0;
+		GregorianCalendar dateActuelle = new GregorianCalendar();
+		GregorianCalendar dateDebutAnnee = null;
+		
+		if (dateActuelle.get(Calendar.MONTH) < Calendar.SEPTEMBER) {
+			dateDebutAnnee = new GregorianCalendar(dateActuelle.get(Calendar.YEAR) 
+					- 1, Calendar.SEPTEMBER,15);
+		} else {
+			dateDebutAnnee = new GregorianCalendar(dateActuelle.get(Calendar.YEAR),
+					Calendar.SEPTEMBER,15);
+		}
+
+		for (Note noteTmp : notes) {
+			// La note doit etre pour cette annee est validee
+			if (noteTmp.examen.date.after(dateDebutAnnee.getTime()) 
+					&& noteTmp.examen.noteValidee) {
+				totalNote += noteTmp.note;
+				cptCoefficient += noteTmp.examen.coef;
+			}
+		}
+		return (Float) ((float) totalNote / (float)cptCoefficient);
+	}
+	
+	/**
+	 * Calcul la moyenne generale d'un etudiant
+	 * @return la moyenne pour chaque matiere ou l'etudiant a passe des examens
+	 */
+	public HashMap<Matiere, Float> calculMoyenneDetailee() {
+		HashMap<Matiere, Float> retour = new HashMap<Matiere, Float>();
+		GregorianCalendar dateActuelle = new GregorianCalendar();
+		GregorianCalendar dateDebutAnnee = null;
+		
+		if (dateActuelle.get(Calendar.MONTH) < Calendar.SEPTEMBER) {
+			dateDebutAnnee = new GregorianCalendar(dateActuelle.get(Calendar.YEAR) 
+					- 1, Calendar.SEPTEMBER,15);
+		} else {
+			dateDebutAnnee = new GregorianCalendar(dateActuelle.get(Calendar.YEAR),
+					Calendar.SEPTEMBER,15);
+		}
+		for (Note noteTmp : notes) {
+			int cptCoefficient = 0, totalNote = 0;
+			// Si la note est validee qu'elle est de cette annee
+			// et que la moyenne de sa matiere n'a pas encore ete calculee :
+			if (noteTmp.examen.noteValidee && noteTmp.examen.date.after(dateDebutAnnee.getTime())
+					&& retour.containsKey(noteTmp.examen.cours.matiere)) {
+				for (Note noteTmp2 : notes) {
+					if (noteTmp2.examen.date.after(dateDebutAnnee.getTime()) 
+							&& noteTmp2.examen.noteValidee && noteTmp2.examen.cours.matiere.nom.equals(
+									noteTmp.examen.cours.matiere.nom)) {
+						totalNote += noteTmp2.note;
+						cptCoefficient += noteTmp2.examen.coef;
+					}
+				}
+				retour.put(noteTmp.examen.cours.matiere, (Float) ((float) totalNote / (float)cptCoefficient));
+			}
+		}
+		return retour;
 	}
 }

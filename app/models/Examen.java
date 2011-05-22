@@ -21,7 +21,7 @@ public class Examen extends Model{
 	public Date date;
 	
 	@Required
-	public Integer coef;
+	public Float coef;
 	
 	@ManyToOne
 	@Required
@@ -33,7 +33,7 @@ public class Examen extends Model{
 	@Required
 	public boolean noteValidee;
 
-	public Examen(String nom, Date date, Integer coef, Cours cours) {
+	public Examen(String nom, Date date, Float coef, Cours cours) {
 		this.nom = nom;
 		this.date = date;
 		this.cours = cours;
