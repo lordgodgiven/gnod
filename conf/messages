@@ -6,6 +6,13 @@ application.deconnection=Déconnexion
 application.home=Accueil
 application.authors=par Romain DESTENAY et Julien OUDOT
 application.user.connected=Connecté en tant que %1$s %2$s
+
+#clés des enseignants
 application.accueil.enseignant=Accueil enseignant :
-application.accueil.etudiant=Accueil étudiant :
+
+#clés du personnel de scolarité
 application.accueil.scolarite=Accueil scolarité :
+
+#clés des étudiants
+application.accueil.etudiant=Accueil étudiant :
+application.etudiant.diffusion.titre=Note de %1$s de la classe %2$s :
