@@ -5,6 +5,7 @@
 #   login: initScol
 #   password: secret
 
+# Test data
 
 Scolarite(bob):
     login:          initScol

@@ -3,11 +3,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
-
+import models.Cours;
 import models.Enseignant;
 import models.Etudiant;
+import models.Examen;
 import models.Matiere;
 import models.NewsFeedGen;
+import models.Note;
 import models.Scolarite;
 
 import org.h2.constant.SysProperties;
@@ -29,7 +31,32 @@ public class BasicTest extends UnitTest {
 	@Test
 	public void fullTest() {
 	    Fixtures.loadModels("data.yml");
+	    
+	    // Count things
+	    assertEquals(1, Enseignant.count());
+	    assertEquals(2, Etudiant.count());
+	    assertEquals(2, Scolarite.count());
+	 
+	    // Try to connect as users
+	    assertNotNull(Enseignant.connect("viardots", "secret"));
+	    assertNotNull(Scolarite.connect("marysc", "secret"));
+	    assertNotNull(Etudiant.connect("dulacf", "secret"));
+	    assertNull(Enseignant.connect("viardots", "badpassword"));
+	    assertNull(Scolarite.connect("viardots", "secret"));
+	 
+	    // les cours de sebastien viardot
+	    List<Cours> svCours = Cours.find("enseignant.login", "viardots").fetch();
+	    assertEquals(2, svCours.size());
+	 
+	    // les examens de sebastien viardot
+	    List<Examen> svExamen = Examen.find("cours.enseignant.login", "viardots").fetch();
+	    assertEquals(5, svExamen.size());
+	 
+	    // les notes données par sebastien viardot
+	    List<Note> svnote = Note.find("examen.cours.enseignant.login", "viardots").fetch();
+	    assertEquals(8, svnote.size());
 	}
+	
 	@Test
 	public void creeEtChercheEnseignant() {
 		try {
@@ -124,17 +151,24 @@ public class BasicTest extends UnitTest {
 	
 	@Test
 	public void calculMoyenne() {
-		List<Etudiant> etudiant = Etudiant.findAll();
+		Etudiant etudiant = Etudiant.find("byLogin", "dulacf").first();
 		Etudiant recherche = null;
 		assertNotNull(etudiant);
-		System.out.println("---------Etudiant-----------" +etudiant.size());
-		for (Etudiant etudianttmp : etudiant) {
+		System.out.println("---------Etudiant-----------" +etudiant);
+		
+		List<Scolarite> lst = Scolarite.findAll();
+		System.out.println("---------Scolarite-----------" +Scolarite.findAll().size());
+		
+		List<Enseignant> lst2 = Enseignant.findAll();
+		System.out.println("---------Enseignant-----------" +Enseignant.findAll().size());
+		
+		/*for (Etudiant etudianttmp : etudiant) {
 			System.out.println("Etudiant " +etudianttmp.login);
 			if (etudianttmp.login.equals("dulacf")) {
 				recherche = etudianttmp;
 			}
-		}
-		assertNotNull(recherche);
+		}*/
+		assertNotNull(recherche=etudiant);
 		HashMap<Matiere, Float> moyennes = recherche.calculMoyenneDetailee();
 		assertEquals(moyennes.get(Matiere.find("byNom","Programmation web").first()), (Float)14f);
 		assertEquals(moyennes.get(Matiere.find("byNom","Langage C et compilation").first()), (Float)18f);
