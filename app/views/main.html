@@ -29,7 +29,7 @@
 					<div class="head">&{'application.title'}</div>
 					#{if status == 'connected'}
 						<div class="tagln">
-							<ul> ${prenom} ${nom} est connecté </ul>
+							<ul> &{'application.user.connected', prenom, nom}</ul>
 						</div>	
 					#{/if}					
 					<div id="menulinks">

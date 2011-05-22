@@ -62,7 +62,28 @@ public class Application extends Controller {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Action d'appel du web Service google translate pour la traduction en anglais
+	 */
+	public static void traduitSiteAnglais() {
+		
+	}
+	
+	/**
+	 * Action d'appel du web Service google translate pour la traduction en allemand
+	 */
+	public static void traduitSiteAllemand() {
+		
+	}
+	
+	/**
+	 * Action d'appel du web Service google translate pour la traduction en francais
+	 */
+	public static void traduitSiteFrancais() {
+		
+	}
+	
 	@After
 	static void verifConnectedUser() {
 		if (typeUser != null) {

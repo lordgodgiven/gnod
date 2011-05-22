@@ -7,6 +7,7 @@ import java.util.Date;
 import models.Cours;
 import models.Enseignant;
 import models.Examen;
+import models.NewsFeedGen;
 import models.Note;
 import play.Play;
 import play.cache.Cache;
@@ -133,6 +134,13 @@ public class EnseignantController extends Controller {
 			Examen examen = Examen.findById(id);
 			if (examen.notes != null && examen.notes.size() > 0) {
 				examen.noteValidee = true;
+				// Mise a jours du flux RSS Etudiant a la validation du resultat
+				NewsFeedGen.generate("public/rss/Etudiant_"+examen.cours.classe.nomClasse+".xml",
+						"notes de " +examen.nom+ " disponibles", examen.cours.classe.nomClasse);
+				
+				// Mise a jour du flux RSS Enseignant : suppression de la news correspondant
+				// a l'examen a noter
+				NewsFeedGen.supprimeExamen(examen.cours.classe, examen);
 			} else {
 				flash.error("Vos notes ne sont pas renseignées");
 				afficheResultats(id);
