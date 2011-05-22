@@ -18,3 +18,4 @@ application.accueil.etudiant=Accueil étudiant :
 #Syntaxe des clés à vérifier
 application.etudiant.diffusion.titre=Note de &{%s} de la classe &{%s} :
 application.etudiant.detail.matiere=Détail de &{%s} :
+application.etudiant.detail.moyenne=Détail de la moyenne :
