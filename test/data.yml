@@ -4,3 +4,129 @@
 # Scolarite(initScol):
 #   login: initScol
 #   password: secret
+
+
+Scolarite(bob):
+    login:          initScol
+    password:       secret
+    isAdmin:        true
+    
+Scolarite(marysc):
+    login:          marysc
+    password:       secret
+    
+Enseignant(viardots):
+    nom :           Viardot
+    prenom :        Sebastien
+    login :         viardots
+    password :      secret
+    dateNaissance : 2000-06-14
+    
+Classe(classe1):
+
+Etudiant(etudiant1):
+    nom :           Dulac
+    prenom :        Frank
+    login :         dulacf
+    password :      secret
+    dateNaissance : 1989-03-19
+    classe :        classe1
+
+Etudiant(etudiant2):
+    nom :      Montaulont
+    prenom :   Laurent
+    login :    montaul
+    password : secret
+    dateNaissance : 1989-03-19
+    classe :   classe1
+    
+Matiere(progWeb):
+    nom : Programmation web
+   
+Matiere(C):
+    nom : Langage C et compilation
+
+Cours(cours1):
+    enseignant :  viardots
+    matiere :     progWeb
+    classe :      classe1
+    
+Cours(cours2):
+    enseignant :  viardots
+    matiere :     C
+    classe :      classe1
+
+Examen(examen1):
+    nom :     Examen de programmation web semestre 1
+    cours :   cours1
+    date :    2010-12-13
+    coef :    1.0
+    noteValidee :  true
+
+Note(note1):
+    etudiant : etudiant1
+    examen :   examen1
+    note :   14
+
+Note(note2):
+    etudiant :   etudiant2
+    examen :     examen1
+    note :       11
+
+Examen(examen2):
+    nom :        Examen de programmation web semestre 2
+    cours :      cours1
+    date :       2011-06-13
+    coef :       2.0
+    noteValidee : false    
+    
+Examen(examen3):
+    nom :        Examen de C
+    cours :      cours2
+    date :       2010-05-13
+    coef :       3.0
+    noteValidee : true
+
+Note(note3):
+    etudiant : etudiant1
+    examen :   examen3
+    note :   10
+
+Note(note4):
+    etudiant :   etudiant2
+    examen :     examen3
+    note :       7
+
+Examen(examen4):
+    nom :        Examen de C de TP
+    cours :      cours2
+    date :       2011-02-13
+    coef :       1.0
+    noteValidee : true
+    
+Note(note5):
+    etudiant : etudiant1
+    examen :   examen4
+    note :   18
+
+Note(note6):
+    etudiant :   etudiant2
+    examen :     examen4
+    note :       17   
+ 
+Examen(examen5):
+    nom :        Examen de C
+    cours :      cours2
+    date :       2011-05-13
+    coef :       3.0
+    noteValidee : true
+    
+Note(note7):
+    etudiant : etudiant1
+    examen :   examen5
+    note :   18
+
+Note(note8):
+    etudiant :   etudiant2
+    examen :     examen5
+    note :       17   

@@ -63,7 +63,7 @@ public class EnseignantController extends Controller {
 			 	long id,
 		        @Required(message="A name is required") String nom, 
 		        @Required(message="A date is required") Date date, 
-		        @Required(message="A coefficient is required") Integer coef, 
+		        @Required(message="A coefficient is required") Float coef, 
 		        String randomID) {
 		 	Cours cours = Cours.findById(id);
 		    if(validation.hasErrors()) {
