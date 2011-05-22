@@ -1,0 +1,7 @@
+<!-- 
+- Affiche les notes diffusées par les élèves de la classe de l'étudiants connecté
+et pour l'examen selectionné (sur la page afficheMatiere.html)
+-->
+#{extends 'main.html' /}
+#{set title:'Diffusion' /}
+&{'application.etudiant.diffusion.titre', examen.nom, examen.cours.classe.nomClasse}
