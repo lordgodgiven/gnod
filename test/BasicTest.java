@@ -43,7 +43,10 @@ public class BasicTest extends UnitTest {
 	    assertNotNull(Etudiant.connect("dulacf", "secret"));
 	    assertNull(Enseignant.connect("viardots", "badpassword"));
 	    assertNull(Scolarite.connect("viardots", "secret"));
-	 
+	    Enseignant sViardots = Enseignant.find("byLogin", "viardots").first();
+	    assertNotNull(sViardots);
+	    Etudiant fdulac = Etudiant.find("byLogin", "dulacf").first();
+	    assertNotNull(fdulac);
 	    // les cours de sebastien viardot
 	    List<Cours> svCours = Cours.find("enseignant.login", "viardots").fetch();
 	    assertEquals(2, svCours.size());
@@ -151,10 +154,10 @@ public class BasicTest extends UnitTest {
 	
 	@Test
 	public void calculMoyenne() {
-		Etudiant etudiant = Etudiant.find("byLogin", "dulacf").first();
-		Etudiant recherche = null;
-		assertNotNull(etudiant);
-		System.out.println("---------Etudiant-----------" +etudiant);
+		//Etudiant etudiant = Etudiant.find("byLogin", "dulacf").first();
+		Etudiant fdulac = Etudiant.find("byLogin", "dulacf").first();
+		assertNotNull(fdulac);
+		System.out.println("---------Etudiant-----------" +fdulac);
 		
 		List<Scolarite> lst = Scolarite.findAll();
 		System.out.println("---------Scolarite-----------" +Scolarite.findAll().size());
@@ -168,11 +171,11 @@ public class BasicTest extends UnitTest {
 				recherche = etudianttmp;
 			}
 		}*/
-		assertNotNull(recherche=etudiant);
-		HashMap<Matiere, Float> moyennes = recherche.calculMoyenneDetailee();
+		//assertNotNull(recherche=etudiant);
+		HashMap<Matiere, Float> moyennes = fdulac.calculMoyenneDetailee();
 		assertEquals(moyennes.get(Matiere.find("byNom","Programmation web").first()), (Float)14f);
 		assertEquals(moyennes.get(Matiere.find("byNom","Langage C et compilation").first()), (Float)18f);
-		assertEquals(recherche.calculMoyenneGenerale(), (Float)17.2f);
+		assertEquals(fdulac.calculMoyenneGenerale(), (Float)17.2f);
 	}
 	 @Before
 	 public void setup() {
