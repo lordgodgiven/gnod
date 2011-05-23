@@ -39,11 +39,11 @@ img{border:0;}
 .head{
 	font:58px Verdana, Geneva, sans-serif;
 	color:#FFF;
-	margin-top: -05px;
+	margin-top: -15px;
 }
 
 .tagln{
-	margin-top:30px;
+	margin-top:0px;
 	font:12px Tahoma, Geneva, sans-serif;
 	color:#5c3315;
 	line-height:23px;
@@ -57,17 +57,17 @@ img{border:0;}
 /*menulinks*/
 #menulinks ul{
 	list-style:none;
-	margin-top:-1%;
+	margin-top:5px;
 	height:40px;
 	float:left;
-	width:550px;
 	margin-left:0px;
 }
 
 #menulinks li{
 	display:inline;	
 	float:left;
-	width:87px;
+	padding-left:20px;
+	padding-right:20px;
 	margin-right:60px;
 	text-align:center;
 	background-color:#FFF;
@@ -76,7 +76,6 @@ img{border:0;}
 }
 
 .scrcast{
-	width: 152px;
 	background-color:#FFF;
 }
 
