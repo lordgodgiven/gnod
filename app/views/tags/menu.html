@@ -1,2 +1,17 @@
-<li><a href="aaa">Bouton</a></li>
+#{if _as == 'scolarite'}
+	<li><a href="cours.html" class="scrcast">Cours</a></li>
+	<li><a href="matiere.html" class="scrcast">Matiere</a></li>
+	<li><a href="enseignant.html" class="scrcast">Enseignant</a></li>
+	<li><a href="etudiant.html" class="scrcast">Etudiant</a></li>
+	<li><a href="classe.html" class="scrcast">Classe</a></li>
+
+#{/if}
+#{if _as == 'enseignant'}
+
+#{/if}
+#{if _as == 'etudiant'}
+	<li><a href="moyenne.html" class="scrcast">Moyenne générale</a></li>
+#{/if}
+
+<!-- Rajouter les nom dans message -->
 							
