@@ -31,14 +31,18 @@ public class Application extends Controller {
 					} else {
 						typeUser = new String("scolarite");
 						renderArgs.put("user", scolarite.login);
+						renderArgs.put("typeUser", typeUser);
+						
 					}
 				} else {
 					typeUser = new String("enseignant");
 					renderArgs.put("user", enseignant.login);
+					renderArgs.put("typeUser", typeUser);
 				}
 			} else {
 				typeUser = new String("etudiant");
 				renderArgs.put("user", etudiant.login);
+				renderArgs.put("typeUser", typeUser);
 			}
 			renderArgs.put("status", "connected");
 		} else {
