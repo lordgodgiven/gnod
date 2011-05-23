@@ -21,6 +21,7 @@ public class EtudiantController  extends Controller {
 			renderArgs.put("nom", etudiant.nom);
 			renderArgs.put("prenom", etudiant.prenom);
 			renderArgs.put("status", "connected");
+			renderArgs.put("typeUser", "etudiant");
 		} else {
 			renderArgs.put("status", "disconnected");
 		}

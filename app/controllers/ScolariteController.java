@@ -18,6 +18,7 @@ public class ScolariteController extends Controller {
 			}
 			renderArgs.put("user", scolarite.login);
 			renderArgs.put("status", "connected");
+			renderArgs.put("typeUser", "scolarite");
 		} else {
 			renderArgs.put("status", "disconnected");
 		}

@@ -31,6 +31,7 @@ public class EnseignantController extends Controller {
 			renderArgs.put("nom", enseignant.nom);
 			renderArgs.put("prenom", enseignant.prenom);
 			renderArgs.put("status", "connected");
+			renderArgs.put("typeUser", "enseignant");
 		} else {
 			renderArgs.put("status", "disconnected");
 		}
