@@ -154,29 +154,23 @@ public class BasicTest extends UnitTest {
 	
 	@Test
 	public void calculMoyenne() {
+		Fixtures.loadModels("data.yml");
 		//Etudiant etudiant = Etudiant.find("byLogin", "dulacf").first();
 		Etudiant fdulac = Etudiant.find("byLogin", "dulacf").first();
 		assertNotNull(fdulac);
 		System.out.println("---------Etudiant-----------" +fdulac);
-		
-		List<Scolarite> lst = Scolarite.findAll();
-		System.out.println("---------Scolarite-----------" +Scolarite.findAll().size());
-		
-		List<Enseignant> lst2 = Enseignant.findAll();
-		System.out.println("---------Enseignant-----------" +Enseignant.findAll().size());
-		
-		/*for (Etudiant etudianttmp : etudiant) {
-			System.out.println("Etudiant " +etudianttmp.login);
-			if (etudianttmp.login.equals("dulacf")) {
-				recherche = etudianttmp;
-			}
-		}*/
 		//assertNotNull(recherche=etudiant);
 		HashMap<Matiere, Float> moyennes = fdulac.calculMoyenneDetailee();
-		assertEquals(moyennes.get(Matiere.find("byNom","Programmation web").first()), (Float)14f);
-		assertEquals(moyennes.get(Matiere.find("byNom","Langage C et compilation").first()), (Float)18f);
+		Matiere progWeb = Matiere.find("byNom","Programmation web").first();
+		Matiere langageC = Matiere.find("byNom","Langage C et compilation").first();
+		assertNotNull(progWeb);
+		assertNotNull(langageC);
+		System.out.println("Moyenne progWeb " +moyennes.get(progWeb));
+		assertEquals(moyennes.get(progWeb), (Float) 14f);
+		assertEquals(moyennes.get(langageC), (Float)18f);
 		assertEquals(fdulac.calculMoyenneGenerale(), (Float)17.2f);
 	}
+	
 	 @Before
 	 public void setup() {
 		 new File("public/rss/Enseignant_Sebastien Viardot.xml").delete();
