@@ -66,7 +66,7 @@ public class Etudiant extends Model {
 	 * @return la valeur de cette moyenne
 	 */
 	public Float calculMoyenneGenerale() {
-		int cptCoefficient = 0, totalNote = 0;
+		float cptCoefficient = 0, totalNote = 0;
 		GregorianCalendar dateActuelle = new GregorianCalendar();
 		GregorianCalendar dateDebutAnnee = null;
 		
@@ -82,7 +82,7 @@ public class Etudiant extends Model {
 			// La note doit etre pour cette annee est validee
 			if (noteTmp.examen.date.after(dateDebutAnnee.getTime()) 
 					&& noteTmp.examen.noteValidee) {
-				totalNote += noteTmp.note;
+				totalNote = totalNote + (noteTmp.note * noteTmp.examen.coef);
 				cptCoefficient += noteTmp.examen.coef;
 			}
 		}
@@ -106,22 +106,31 @@ public class Etudiant extends Model {
 					Calendar.SEPTEMBER,15);
 		}
 		for (Note noteTmp : notes) {
-			int cptCoefficient = 0, totalNote = 0;
+			System.out.println("Note " +noteTmp.note);
+			float cptCoefficient = 0, totalNote = 0;
 			// Si la note est validee qu'elle est de cette annee
 			// et que la moyenne de sa matiere n'a pas encore ete calculee :
 			if (noteTmp.examen.noteValidee && noteTmp.examen.date.after(dateDebutAnnee.getTime())
-					&& retour.containsKey(noteTmp.examen.cours.matiere)) {
+					&& !retour.containsKey(noteTmp.examen.cours.matiere)) {
+				System.out.println("Calcul de la moyenne de la matiere " +noteTmp.examen.cours.matiere.nom);
 				for (Note noteTmp2 : notes) {
 					if (noteTmp2.examen.date.after(dateDebutAnnee.getTime()) 
 							&& noteTmp2.examen.noteValidee && noteTmp2.examen.cours.matiere.nom.equals(
 									noteTmp.examen.cours.matiere.nom)) {
-						totalNote += noteTmp2.note;
+						totalNote = totalNote +(noteTmp2.note * noteTmp2.examen.coef);
 						cptCoefficient += noteTmp2.examen.coef;
 					}
 				}
+				System.out.println("Total " +totalNote);
+				System.out.println("cptCoeff " +cptCoefficient);
 				retour.put(noteTmp.examen.cours.matiere, (Float) ((float) totalNote / (float)cptCoefficient));
 			}
 		}
+		System.out.println("------Liste des matières----------");
+		for (Matiere matiere : retour.keySet()) {
+			System.out.println("Matiere " +matiere.nom+ ", moyenne : " +retour.get(matiere));
+		}
+		System.out.println("------FIN liste des matières----------");
 		return retour;
 	}
 }
