@@ -14,7 +14,7 @@ public class ScolariteController extends Controller {
 					Security.connected()).first();
 			if (scolarite == null) {
 				System.out.println("User null !!!!");
-				render("Application/index.html");
+				Application.disconnect();
 			}
 			renderArgs.put("user", scolarite.login);
 			renderArgs.put("status", "connected");

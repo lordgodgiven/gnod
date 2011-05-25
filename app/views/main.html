@@ -50,7 +50,22 @@
 					</div>
 				</div>
 				<div class="clear"></div>
-				<br />				
+				<br />		
+				#{if status == 'connected'}
+				<div id="feeds">
+                	<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>
+                    <div class="ltdetail">
+                    <ul>
+						#{if typeUser == 'etudiant'}
+							<li><a href="@{Application.rss}">&{'application.etudiant.feed.suscribe'}</a></li>
+						#{/if}
+						#{if typeUser == 'enseignant'}
+							<li><a href="@{Application.rss}">&{'application.enseignant.feed.suscribe'}</a></li>
+						#{/if}	
+                    </ul>
+                    </div>
+                </div>   
+				#{/if}	
 				<!--footer starts-->
 				<div id="footer">
 					<div class="copy">

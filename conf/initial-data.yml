@@ -23,6 +23,7 @@ Enseignant(viardots):
     dateNaissance : 2000-06-14
     
 Classe(classe1):
+    nomClasse : 1A ISI 2
 
 Etudiant(etudiant1):
     nom :           Dulac

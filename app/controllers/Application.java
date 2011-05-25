@@ -1,5 +1,16 @@
 package controllers;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.jdom.input.SAXBuilder;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 import models.Enseignant;
 import models.Etudiant;
 import models.Scolarite;
@@ -87,6 +98,8 @@ public class Application extends Controller {
 	public static void traduitSiteFrancais() {
 		
 	}
+	
+	
 	
 	@After
 	static void verifConnectedUser() {
