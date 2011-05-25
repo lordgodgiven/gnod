@@ -3,10 +3,13 @@
 import groovyjarjarantlr.collections.List;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import models.Cours;
 import models.Enseignant;
 import models.Examen;
+import models.Matiere;
 import models.NewsFeedGen;
 import models.Note;
 import play.Play;
@@ -40,8 +43,12 @@ public class EnseignantController extends Controller {
 
 	public static void index() {
 		Enseignant enseignant = Enseignant.find("byLogin", Security.connected()).first();
+		Set<Matiere> matieres = new HashSet<Matiere> ();
+		for (Cours coursTmp : enseignant.cours){
+			if (!matieres.contains(coursTmp.matiere))matieres.add(coursTmp.matiere);
+		}
 		// Permet d'afficher sur la page d'accueil les cours de l'enseignant
-		render("enseignant/index.html", enseignant);
+		render("enseignant/index.html", enseignant, matieres);
 	}
 	
 	/**

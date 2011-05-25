@@ -35,6 +35,42 @@ img{border:0;}
 	text-transform:uppercase;
 }
 
+.outsideField{
+	border: solid;
+	border-color: white;
+	display:
+}
+
+.insideField{
+	border: solid;
+	border-color: #689E18;
+}
+
+.insideField legend{
+	border: solid;
+	border-color: #689E18;
+}
+
+.insideField:hover legend{
+	background-color: #B9EA71;
+}
+
+.divLink{
+	border-left: thin;
+	border-left-style:solid;
+	border-left-color: black;
+	border-bottom: thin;
+	border-bottom-style:solid;
+	border-bottom-color: black;
+	padding-left: 10px;
+	margin-bottom: 5px;
+}
+
+.divLink:hover{
+	background-color: #B9EA71;
+	cursor:pointer;
+}
+
 .head{
 	font:58px Verdana, Geneva, sans-serif;
 	color:#FFF;

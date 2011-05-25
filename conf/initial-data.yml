@@ -23,8 +23,11 @@ Enseignant(viardots):
     dateNaissance : 2000-06-14
     
 Classe(classe1):
-    nomClasse : 1A ISI 2
-
+    nomClasse :     1A ISI 2
+    
+Classe(classe2):
+    nomClasse :     2A_App
+    
 Etudiant(etudiant1):
     nom :           Dulac
     prenom :        Frank
@@ -56,6 +59,11 @@ Cours(cours2):
     enseignant :  viardots
     matiere :     C
     classe :      classe1
+    
+Cours(cours3):
+    enseignant :  viardots
+    matiere :     C
+    classe :      classe2
 
 Examen(examen1):
     nom :     Examen de programmation web semestre 1
