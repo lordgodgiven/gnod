@@ -12,7 +12,6 @@ img{border:0;}
 
 #container{
 	margin:0 auto;
-	width:93%;
 	height:auto;
 	background:url(../images/bg.jpg) repeat-x;
 }
@@ -39,7 +38,7 @@ img{border:0;}
 .head{
 	font:58px Verdana, Geneva, sans-serif;
 	color:#FFF;
-	margin-top: -15px;
+	
 }
 
 .tagln{
