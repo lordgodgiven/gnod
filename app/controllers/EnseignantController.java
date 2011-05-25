@@ -26,7 +26,7 @@ public class EnseignantController extends Controller {
 					Security.connected()).first();
 			if (enseignant == null) {
 				System.out.println("User null !!!!");
-				render("Application/index.html");
+				Application.disconnect();
 			}
 			renderArgs.put("nom", enseignant.nom);
 			renderArgs.put("prenom", enseignant.prenom);
@@ -102,6 +102,7 @@ public class EnseignantController extends Controller {
 		 * => Selection de l'id a ajouter dans la vue
 		 */
 		// TODO : gérer le nombre dynamique de note a entrer
+		// Apparemment, des listes groovy existent : a faire a deux
 		public static void modifResultats(long id,
 				List valNotes, 
 		        String randomID) {

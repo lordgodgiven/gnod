@@ -20,10 +20,14 @@ public class Note extends Model {
 	@MaxSize(4)
 	@Required
 	public Integer note;
-
+	
+	@Required
+	public boolean isDisffused;
+	
 	public Note(Etudiant etudiant, Examen examen, Integer note) {
 		this.etudiant = etudiant;
 		this.examen = examen;
 		this.note = note;
+		this.isDisffused = false;
 	}
 }
