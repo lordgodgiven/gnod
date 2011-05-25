@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+
+<form>
+  <fieldset class="outsideField">
+    <legend>Cours</legend>
+    <div>
+
+    #{list items:matiere, as : 'matiere'}
+    	<fieldset class="insideField">
+    		<legend>${matiere.nom}</legend>
+    		#{list items:enseignant.cours, as : 'cours'}
+    			#{if cours.matiere.nom == matiere.nom}
+		    	<div class="divLink">  ${cours.classe.nomClasse} </div>
+  				#{/if}
+ 			#{/list}
+  		</fieldset>
+  		#{if !matiere_isLast}<br/> #{/if}
+	#{/list}
+    
+    </div>
+  </fieldset>
+
+</form>
+
+

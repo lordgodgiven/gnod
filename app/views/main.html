@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<title>GNOD : Gestion des notes</title>
+		<link rel="stylesheet" type="text/css" media="screen" 
+            href="@{'/public/stylesheets/main.css'}" />
+		#{get 'moreStyles' /}
+		<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+		#{get 'moreScripts' /}
+	</head>
+
+
+    <body>
+    	<div id="wrapper">
+    		<!--container starts-->
+	    	<div id="container">
+			
+				<div id="ltcontent">
+					<!--hdlogo starts-->
+					<div id="hdlogo" align="center">
+						<img src="images/topbanner.jpg" alt=""/>
+					</div>
+					 <div class="ltgap"></div>
+				</div>
+				<div id="rtcontent">				               
+					<!--head starts-->
+					<div class="head">&{'application.title'}</div>
+					<div id="menulinks">
+						<ul>
+							<li><a href="@{Application.index()}" class="scrcast">&{'application.home'}</a></li>
+							
+							#{menu as:typeUser/}
+									<li>
+										<a href="@{Application.disconnect()}" class="scrcast">&{'application.deconnection'}</a>
+									</li>
+						</ul>
+					</div>	
+					<div class="clear"></div>
+					#{if status == 'connected'}
+						<div class="tagln">
+							<ul> &{'application.user.connected', prenom, nom}</ul>
+						</div>	
+					#{/if}					
+					<div class="document">
+						<div class="dcontent">
+							#{doLayout /}
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<br />		
+				#{if status == 'connected'}
+				<div id="feeds">
+                	<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>
+                    <div class="ltdetail">
+                    <ul>
+						#{if typeUser == 'etudiant'}
+							<li><a href="@{Application.rss}">&{'application.etudiant.feed.suscribe'}</a></li>
+						#{/if}
+						#{if typeUser == 'enseignant'}
+							<li><a href="@{Application.rss}">&{'application.enseignant.feed.suscribe'}</a></li>
+						#{/if}	
+                    </ul>
+                    </div>
+                </div>   
+				#{/if}	
+				<!--footer starts-->
+				<div id="footer">
+					<div class="copy">
+					&copy; 2011 Ensimag
+					</div>
+					<div class="copy">
+						<span>&{'application.authors'}</span>
+					</div>
+				</div>
+				<!--footer ends-->
+			</div>
+		</div>
+    </body>
+</html>
