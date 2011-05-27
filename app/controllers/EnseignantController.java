@@ -75,6 +75,7 @@ public class EnseignantController extends Controller {
 		        String randomID) {
 		 	Cours cours = Cours.findById(id);
 		    if(validation.hasErrors()) {
+		    	flash.error("Formulaire invalide");
 		        render("Enseignant/examenForm.html", cours, randomID);
 		    }
 		    Examen examen = new Examen(nom, date, coef, cours);
