@@ -52,5 +52,13 @@ public class Enseignant extends Model {
 	public static Enseignant connect(String login, String password) {
 		return find("byLoginAndPassword", login, password).first();
 	}
+	
+	/**
+	 * Permet d'obtenir la liste des 20 premiers enseignant dans l'ordre alphabetique
+	 * @return
+	 */
+	public static List<Enseignant> find20Enseignant() {
+		
+	}
 
 }

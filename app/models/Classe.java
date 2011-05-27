@@ -19,7 +19,8 @@ public class Classe extends Model {
 	@OneToMany(mappedBy = "classe", cascade = CascadeType.ALL)
 	public Set<Cours> cours;
 
-	public Classe() {
+	public Classe(String nomClasse) {
+		this.nomClasse = nomClasse;
 	}
 	/*
 	 * Methode pour generer le fichier XML du flux RSS

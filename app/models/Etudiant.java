@@ -1,10 +1,12 @@
 package models;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -132,5 +134,33 @@ public class Etudiant extends Model {
 		}
 		System.out.println("------FIN liste des matières----------");
 		return retour;
+	}
+	
+	/**
+	 * Return les etudiants sans classe
+	 */
+	public static List<Etudiant> sansClasse() {
+		List<Etudiant> lstEtudiantSC = new ArrayList<Etudiant>();
+		List<Etudiant> lstEtudiants = Etudiant.findAll();
+		for (Etudiant etudiantTmp : lstEtudiants) {
+			if (etudiantTmp.classe == null) 
+				lstEtudiantSC.add(etudiantTmp);
+		}
+		return lstEtudiantSC;
+	}
+	
+	/**
+	 * met a jour les etudiants qui n'ont pas de classe
+	 * @param lstEtudiantSC liste des etudiants sans classe
+	 */
+	public static void saveEtudiantSC(List<Etudiant> lstEtudiantSC) {
+		for (Etudiant etudiantTmp : lstEtudiantSC) {
+			// Maj de la classe
+			etudiantTmp.classe.etudiant.remove(etudiantTmp);
+			etudiantTmp.classe.save();
+			// Maj de l'etudiant
+			etudiantTmp.classe = null;
+			etudiantTmp.save();
+		}
 	}
 }
