@@ -32,4 +32,15 @@ public class Scolarite extends Model {
 	public static Scolarite connect(String login, String password) {
 		return find("byLoginAndPassword", login, password).first();
 	}
+	
+	/**
+	 * Permet de savoir si un login existe deja dans la base de donnees
+	 * @param login login a rechercher dans la BD
+	 * @return true si le login est deja pris, false sinon
+	 */
+	public static boolean exist(String login) {
+		return (Etudiant.find("byLogin", login) != null 
+				&& Enseignant.find("byLogin", login) != null
+				&& Scolarite.find("byLogin", login) != null);
+	}
 }

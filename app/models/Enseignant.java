@@ -1,7 +1,12 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -55,10 +60,140 @@ public class Enseignant extends Model {
 	
 	/**
 	 * Permet d'obtenir la liste des 20 premiers enseignant dans l'ordre alphabetique
-	 * @return
+	 * @return la liste de maximum 20 enseignants
 	 */
-	public static List<Enseignant> find20Enseignant() {
-		
+	public static List<Enseignant> find20Enseignants() {
+		List<Enseignant> allEnseignants = Enseignant.find("order by nom, prenom asc").fetch();
+		// On veut les 20 premiers
+		List<Enseignant> enseignants = new ArrayList<Enseignant>();
+		Iterator<Enseignant> itEnseignant = allEnseignants.iterator();
+		int cpt = 0;
+		while (cpt < 20 && itEnseignant.hasNext()) {
+			enseignants.add(itEnseignant.next());
+			cpt++;
+		}
+		return enseignants;
 	}
-
+	
+	/**
+	 * Permet d'obtenir la liste des 20 prochains enseignants dans l'ordre alphabetique
+	 * @param lastEnseignant dernier enseignant de la page actuelle
+	 * @return la liste de maximum 20 enseignants
+	 */
+	public static List<Enseignant> next20Enseignants(Long idLastEnseignant) {
+		List<Enseignant> allEnseignants = Enseignant.find("order by nom, prenom asc").fetch();
+		// On veut les 20 premiers
+		List<Enseignant> enseignants = new ArrayList<Enseignant>();
+		Iterator<Enseignant> itEnseignant = allEnseignants.iterator();
+		int cptEnseignant = 0;
+		// A vrai lorsque l'enseignant en paramtre est trouve dans la liste
+		boolean trouve = false;
+		while (cptEnseignant < 20 && itEnseignant.hasNext()) {
+			Enseignant enseignantTmp = itEnseignant.next();
+			if (!trouve && enseignantTmp.id == idLastEnseignant) {
+				trouve = true;
+				enseignants.add(itEnseignant.next());
+				cptEnseignant++;
+			} else if (trouve) {
+				enseignants.add(itEnseignant.next());
+				cptEnseignant++;
+			}
+		}
+		return enseignants;
+	}
+	
+	/**
+	 * Permet d'obtenir la liste des 20 enseignants precedents dans l'ordre alphabetique
+	 * @param premEnseignant premier enseignant de la page actuelle
+	 * @return la liste de maximum 20 enseignants
+	 */
+	public static List<Enseignant> previous20Enseignants(Long idPremEnseignant) {
+		List<Enseignant> allEnseignants = Enseignant.find("order by nom, prenom asc").fetch();
+		// On veut les 20 premiers
+		List<Enseignant> enseignants = new ArrayList<Enseignant>();
+		int cptAll = -1, cptEnseignant = 0;
+		// A vrai lorsque l'enseignant en paramtre est trouve dans la liste
+		boolean trouve = false;
+		while (!trouve && cptAll < allEnseignants.size() - 1) {
+			cptAll++;
+			trouve = (allEnseignants.get(cptAll).id == idPremEnseignant);
+		}
+		// On veut garder l'ordre de la liste initiale
+		if (cptAll < 19) {
+			cptEnseignant = cptAll;
+		} else {
+			cptEnseignant = 19;
+		}
+		
+		// On rempli la liste de retour avec les enseignants precedents
+		while (cptEnseignant <= 0) {
+			enseignants.set(cptEnseignant, allEnseignants.get(cptAll)) ;
+			cptEnseignant--;
+			cptAll--;
+		}
+		return enseignants;
+	}
+	
+	public static List<Enseignant> findAllEnseignant() {
+		return Enseignant.find("order by nom, prenom asc").fetch();
+	}
+	
+	/**
+	 * Permet de savoir si un login existe deja dans la base de donnees
+	 * @param login login a rechercher dans la BD
+	 * @return true si le login est deja pris, false sinon
+	 */
+	public static boolean exist(String login) {
+		return (Etudiant.find("byLogin", login) != null 
+				&& Enseignant.find("byLogin", login) != null
+				&& Scolarite.find("byLogin", login) != null);
+	}
+	
+    /**
+     * Methode de recherche d'un enseignant a partir d'une chaine saisie
+     * @param chaine chaine a rechercher parmis les noms/prenoms des enseignants
+     * @return la liste des enseignants correspondant a la recherche
+     */
+	public static List<Enseignant> cherche(String chaine) {
+		// LinkedList pour ajouter par ordre de pertinence
+		List<Enseignant> lstEnseignants = new ArrayList<Enseignant>();
+		StringTokenizer st = new StringTokenizer(chaine, " ", false);
+		String [] tabToken = new String[st.countTokens()];
+		int cpt = 0;
+		while (st.hasMoreElements()) {
+			tabToken[cpt] = st.nextToken();
+			cpt++;
+		}
+		// saisie du nom ou du prenom
+		if (st.countTokens() == 1) {
+			lstEnseignants = Enseignant.find("byPrenomLike", "%" +tabToken[0]+ "%").fetch();
+			if (lstEnseignants.size() <= 0) {
+				lstEnseignants = Enseignant.find("byNomLike", "%" +tabToken[1]+ "%").fetch();
+			}
+		}
+		// saisie du type nom prenom ou prenom nom
+		else if (st.countTokens() == 2) {
+			lstEnseignants = Enseignant.find("byNomLikeAndPrenomLike", "%" +tabToken[0]+ "%", "%" +tabToken[1]+ "%").fetch();
+			if (lstEnseignants.size() <= 0) {
+				lstEnseignants = Enseignant.find("byNomLikeAndPrenomLike", "%" +tabToken[1]+ "%", "%" +tabToken[0]+ "%").fetch();
+				if (lstEnseignants.size() <= 0) {
+					// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
+					lstEnseignants = Enseignant.find("byNomLike", "%" +chaine+ "%").fetch();
+					if (lstEnseignants.size() <= 0) {
+						lstEnseignants = Enseignant.find("byPrenomLike", "%" +chaine+ "%").fetch();
+					}
+				}
+			}
+		}
+		// On a affaire a un prenom ou un nom compose (pour simplifier, on fait la recherche que sur un champ
+		// Sinon il faudrait decomposer toutes les combinaisons possibles en 2 puissance nombre de tokens)
+		else {
+			// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
+			lstEnseignants = Enseignant.find("byNomLike", "%" +chaine+ "%").fetch();
+			if (lstEnseignants.size() <= 0) {
+				lstEnseignants = Enseignant.find("byPrenomLike", "%" +chaine+ "%").fetch();
+			}
+		}
+		return lstEnseignants;
+	}
 }

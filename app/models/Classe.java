@@ -1,5 +1,6 @@
 package models;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,14 @@ public class Classe extends Model {
 	public Classe(String nomClasse) {
 		this.nomClasse = nomClasse;
 	}
-	/*
-	 * Methode pour generer le fichier XML du flux RSS
-	 */
+	
+    /**
+     * Methode de recherche d'une classe a partir d'une chaine saisie
+     * @param nomClasse chaine a rechercher parmis les noms de classe
+     * @return la liste des classes correspondant a la recherche
+     */
+	public static List<Classe> cherche(String nomClasse) {
+		return 	Classe.find("nomClasse like ?", "%" +nomClasse+ "%").fetch();
+	}
+
 }

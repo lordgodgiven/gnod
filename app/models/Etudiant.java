@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -139,14 +140,8 @@ public class Etudiant extends Model {
 	/**
 	 * Return les etudiants sans classe
 	 */
-	public static List<Etudiant> sansClasse() {
-		List<Etudiant> lstEtudiantSC = new ArrayList<Etudiant>();
-		List<Etudiant> lstEtudiants = Etudiant.findAll();
-		for (Etudiant etudiantTmp : lstEtudiants) {
-			if (etudiantTmp.classe == null) 
-				lstEtudiantSC.add(etudiantTmp);
-		}
-		return lstEtudiantSC;
+	public static List<Etudiant> sansClasse() {		
+		return Etudiant.find("classe is null").fetch();
 	}
 	
 	/**
@@ -156,11 +151,101 @@ public class Etudiant extends Model {
 	public static void saveEtudiantSC(List<Etudiant> lstEtudiantSC) {
 		for (Etudiant etudiantTmp : lstEtudiantSC) {
 			// Maj de la classe
+			// TODO : tester sans les deux lignes suivantes, normalement, ca marche
 			etudiantTmp.classe.etudiant.remove(etudiantTmp);
 			etudiantTmp.classe.save();
 			// Maj de l'etudiant
 			etudiantTmp.classe = null;
 			etudiantTmp.save();
 		}
+	}
+	
+	
+	
+	/**
+	 * Permet d'obtenir la liste des 20 premiers etudiants dans l'ordre alphabetique
+	 * @return la liste de maximum 20 etudiant
+	 */
+	public static List<Etudiant> find20Etudiant() {
+		List<Etudiant> allEtudiants = Etudiant.find("order by nom, prenom asc").fetch();
+		// On veut les 20 premiers
+		List<Etudiant> etudiants = new ArrayList<Etudiant>();
+		Iterator<Etudiant> itEtudiant = allEtudiants.iterator();
+		int cpt = 0;
+		while (cpt < 20 && itEtudiant.hasNext()) {
+			etudiants.add(itEtudiant.next());
+			cpt++;
+		}
+		return etudiants;
+	}
+	
+	/**
+	 * Permet d'obtenir la liste des 20 prochains Etudiants dans l'ordre alphabetique
+	 * @param idLastEtudiant dernier etudiant de la page actuelle
+	 * @return la liste de maximum 20 etudiants
+	 */
+	public static List<Etudiant> next20Etudiants(Long idLastEtudiant) {
+		List<Etudiant> allEtudiants = Etudiant.find("order by nom, prenom asc").fetch();
+		// On veut les 20 premiers
+		List<Etudiant> etudiants = new ArrayList<Etudiant>();
+		Iterator<Etudiant> itEtudiant = allEtudiants.iterator();
+		int cptEtudiant = 0;
+		// A vrai lorsque l'etudiant en paramtre est trouve dans la liste
+		boolean trouve = false;
+		while (cptEtudiant < 20 && itEtudiant.hasNext()) {
+			Etudiant etudiantTmp = itEtudiant.next();
+			if (!trouve && etudiantTmp.id == idLastEtudiant) {
+				trouve = true;
+				etudiants.add(itEtudiant.next());
+				cptEtudiant++;
+			} else if (trouve) {
+				etudiants.add(itEtudiant.next());
+				cptEtudiant++;
+			}
+		}
+		return etudiants;
+	}
+	
+	/**
+	 * Permet d'obtenir la liste des 20 etudiants precedents dans l'ordre alphabetique
+	 * @param idPremEtudiant premier etudiant de la page actuelle
+	 * @return la liste de maximum 20 etudiants
+	 */
+	public static List<Etudiant> previous20Etudiants(Long idPremEtudiant) {
+		List<Etudiant> allEtudiants = Etudiant.find("order by nom, prenom asc").fetch();
+		// On veut les 20 premiers
+		List<Etudiant> etudiants = new ArrayList<Etudiant>();
+		int cptAll = -1, cptEtudiant = 0;
+		// A vrai lorsque l'enseignant en paramtre est trouve dans la liste
+		boolean trouve = false;
+		while (!trouve && cptAll < allEtudiants.size() - 1) {
+			cptAll++;
+			trouve = (allEtudiants.get(cptAll).id == idPremEtudiant);
+		}
+		// On veut garder l'ordre de la liste initiale
+		if (cptAll < 19) {
+			cptEtudiant = cptAll;
+		} else {
+			cptEtudiant = 19;
+		}
+		
+		// On rempli la liste de retour avec les enseignants precedents
+		while (cptEtudiant <= 0) {
+			etudiants.set(cptEtudiant, allEtudiants.get(cptAll)) ;
+			cptEtudiant--;
+			cptAll--;
+		}
+		return etudiants;
+	}
+	
+	/**
+	 * Permet de savoir si un login existe deja dans la base de donnees
+	 * @param login login a rechercher dans la BD
+	 * @return true si le login est deja pris, false sinon
+	 */
+	public static boolean exist(String login) {
+		return (Etudiant.find("byLogin", login) != null 
+				&& Enseignant.find("byLogin", login) != null
+				&& Scolarite.find("byLogin", login) != null);
 	}
 }
