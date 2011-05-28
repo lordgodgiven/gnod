@@ -42,9 +42,16 @@
 						<div class="tagln">
 							<ul> &{'application.user.connected', prenom, nom}</ul>
 						</div>	
-					#{/if}					
+					#{/if}	
+					#{if flash.error}
+					    <p style="color:#c00">
+					        ${flash.error}
+					    </p>
+					#{/if}				
 					<div class="document">
 						<div class="dcontent">
+							
+							
 							#{doLayout /}
 						</div>
 					</div>

@@ -11,6 +11,8 @@ application.feed.suscribe=S'abonner au flux
 #clés des enseignants
 application.accueil.enseignant=Accueil enseignant :
 application.enseignant.feed.suscribe=Flux de publication des examens à noter
+application.enseignant.ajouterPartiel=Ajouter un examen
+application.enseignant.nouvelExam=Nouvel examen
 
 #clés du personnel de scolarité
 application.accueil.scolarite=Accueil scolarité :

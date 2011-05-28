@@ -89,6 +89,19 @@ img{border:0;}
 	line-height:23px;
 }
 
+.button{
+	 color:black; 
+	 font-weight:bold;
+		
+}
+
+.buttonAjout{
+	 float: right;
+	 color:black; 
+	 font-weight:bold;
+		
+}
+
 .italics{
 	font-style: italic;	
 	text-transform:none;
