@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -51,7 +52,7 @@ public class Etudiant extends Model {
 	@OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
 	public Set<Note> notes;
 
-	public Etudiant(String prenom, String nom, String login, String password,
+	public Etudiant(String login, String password, String nom, String prenom, 
 			Date dateNaissance) {
 		this.prenom = prenom;
 		this.nom = nom;
@@ -166,7 +167,7 @@ public class Etudiant extends Model {
 	 * Permet d'obtenir la liste des 20 premiers etudiants dans l'ordre alphabetique
 	 * @return la liste de maximum 20 etudiant
 	 */
-	public static List<Etudiant> find20Etudiant() {
+	public static List<Etudiant> find20Etudiants() {
 		List<Etudiant> allEtudiants = Etudiant.find("order by nom, prenom asc").fetch();
 		// On veut les 20 premiers
 		List<Etudiant> etudiants = new ArrayList<Etudiant>();
@@ -247,5 +248,52 @@ public class Etudiant extends Model {
 		return (Etudiant.find("byLogin", login) != null 
 				&& Enseignant.find("byLogin", login) != null
 				&& Scolarite.find("byLogin", login) != null);
+	}
+	
+	  /**
+     * Methode de recherche d'un Etudiant a partir d'une chaine saisie
+     * @param chaine chaine a rechercher parmis les noms/prenoms des etudiants
+     * @return la liste des etudiants correspondant a la recherche
+     */
+	public static List<Etudiant> cherche(String chaine) {
+		List<Etudiant> lstEtudiants = new ArrayList<Etudiant>();
+		StringTokenizer st = new StringTokenizer(chaine, " ", false);
+		String [] tabToken = new String[st.countTokens()];
+		int cpt = 0;
+		while (st.hasMoreElements()) {
+			tabToken[cpt] = st.nextToken();
+			cpt++;
+		}
+		// saisie du nom ou du prenom
+		if (st.countTokens() == 1) {
+			lstEtudiants = Etudiant.find("byPrenomLike", "%" +tabToken[0]+ "%").fetch();
+			if (lstEtudiants.size() <= 0) {
+				lstEtudiants = Etudiant.find("byNomLike", "%" +tabToken[1]+ "%").fetch();
+			}
+		}
+		// saisie du type nom prenom ou prenom nom
+		else if (st.countTokens() == 2) {
+			lstEtudiants = Etudiant.find("byNomLikeAndPrenomLike", "%" +tabToken[0]+ "%", "%" +tabToken[1]+ "%").fetch();
+			if (lstEtudiants.size() <= 0) {
+				lstEtudiants = Etudiant.find("byNomLikeAndPrenomLike", "%" +tabToken[1]+ "%", "%" +tabToken[0]+ "%").fetch();
+				if (lstEtudiants.size() <= 0) {
+					// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
+					lstEtudiants = Etudiant.find("byNomLike", "%" +chaine+ "%").fetch();
+					if (lstEtudiants.size() <= 0) {
+						lstEtudiants = Etudiant.find("byPrenomLike", "%" +chaine+ "%").fetch();
+					}
+				}
+			}
+		}
+		// On a affaire a un prenom ou un nom compose (pour simplifier, on fait la recherche que sur un champ
+		// Sinon il faudrait decomposer toutes les combinaisons possibles en 2 puissance nombre de tokens)
+		else {
+			// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
+			lstEtudiants = Etudiant.find("byNomLike", "%" +chaine+ "%").fetch();
+			if (lstEtudiants.size() <= 0) {
+				lstEtudiants = Etudiant.find("byPrenomLike", "%" +chaine+ "%").fetch();
+			}
+		}
+		return lstEtudiants;
 	}
 }

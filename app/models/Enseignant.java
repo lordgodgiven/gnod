@@ -155,7 +155,6 @@ public class Enseignant extends Model {
      * @return la liste des enseignants correspondant a la recherche
      */
 	public static List<Enseignant> cherche(String chaine) {
-		// LinkedList pour ajouter par ordre de pertinence
 		List<Enseignant> lstEnseignants = new ArrayList<Enseignant>();
 		StringTokenizer st = new StringTokenizer(chaine, " ", false);
 		String [] tabToken = new String[st.countTokens()];
