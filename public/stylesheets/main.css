@@ -89,6 +89,22 @@ img{border:0;}
 	line-height:23px;
 }
 
+.flashError{
+	 color:red; 
+	 float: right;
+		
+}
+
+.flashSuccess{
+	 color:green; 
+	 float: right;
+		
+}
+
+.listExam ul{
+		background-color: #B9EA71;
+}
+
 .button{
 	 color:black; 
 	 font-weight:bold;
