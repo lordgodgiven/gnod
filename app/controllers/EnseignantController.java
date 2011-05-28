@@ -42,9 +42,9 @@ public class EnseignantController extends Controller {
 
 	public static void index() {
 		Enseignant enseignant = Enseignant.find("byLogin", Security.connected()).first();
-		Set<Matiere> matieres = new HashSet<Matiere> ();
+		Set<String> matieres = new HashSet<String> ();
 		for (Cours coursTmp : enseignant.cours){
-			if (!matieres.contains(coursTmp.matiere))matieres.add(coursTmp.matiere);
+			if (!matieres.contains(coursTmp.matiere.nom))matieres.add(coursTmp.matiere.nom);
 		}
 		// Permet d'afficher sur la page d'accueil les cours de l'enseignant
 		render("enseignant/index.html", enseignant, matieres);
@@ -59,7 +59,7 @@ public class EnseignantController extends Controller {
 	public static void afficheExamens(long id) {
 		Cours cours = Cours.findById(id);
 	    String randomID = Codec.UUID();
-	    render(cours, randomID);
+	    render("enseignant/afficheExamens.html", cours, randomID);
 	}
 	
 	/**

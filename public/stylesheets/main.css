@@ -38,17 +38,22 @@ img{border:0;}
 .outsideField{
 	border: solid;
 	border-color: white;
-	display:
 }
 
 .insideField{
 	border: solid;
 	border-color: #689E18;
+	float:left;
 }
 
 .insideField legend{
 	border: solid;
 	border-color: #689E18;
+}
+
+.insideField a{
+	color: black;
+	text-decoration: none;
 }
 
 .insideField:hover legend{
@@ -137,7 +142,7 @@ img{border:0;}
 .document{
 	/*height:265px;*/
 	/*background-color:#fff;*/
-	width: 60%;
+	width: 100%;
 }
 
 .dochead{
@@ -340,10 +345,13 @@ img{border:0;}
 
 #feeds{
 	height:140px;
+	border: solid;
+	border-color: white;
 	background-color:#d5d1bf;
 	width:310px;
-	margin-left:24px;
-	margin-top: 15px;
+	margin-right:24px;
+	margin-top: -5px;
+	float:right;
 }
 
 #social{
