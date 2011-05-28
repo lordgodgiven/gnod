@@ -28,6 +28,12 @@ Classe(classe1):
 Classe(classe2):
     nomClasse :     2A_App
     
+Classe(classe3):
+    nomClasse :     1A_App
+    
+Classe(classe4):
+    nomClasse :     3A_App
+    
 Etudiant(etudiant1):
     nom :           Dulac
     prenom :        Frank
@@ -50,6 +56,12 @@ Matiere(progWeb):
 Matiere(C):
     nom : Langage C et compilation
 
+Matiere(Sap):
+    nom : Semantique et analyse des programmes
+
+Matiere(Algo):
+    nom : Algorithmique avancee
+
 Cours(cours1):
     enseignant :  viardots
     matiere :     progWeb
@@ -64,6 +76,26 @@ Cours(cours3):
     enseignant :  viardots
     matiere :     C
     classe :      classe2
+
+Cours(cours4):
+    enseignant :  viardots
+    matiere :     Algo
+    classe :      classe3
+
+Cours(cours5):
+    enseignant :  viardots
+    matiere :     Sap
+    classe :      classe2
+
+Cours(cours6):
+    enseignant :  viardots
+    matiere :     Algo
+    classe :      classe4
+
+Cours(cours7):
+    enseignant :  viardots
+    matiere :     Sap
+    classe :      classe4
 
 Examen(examen1):
     nom :     Examen de programmation web semestre 1
