@@ -2,10 +2,10 @@
 
 <form>
   <fieldset class="outsideField">
-    <legend>Cours : ${cours.classe.nomClasse} : ${cours.matiere.nom}</legend>
-    
-   
-
+    <legend>${cours.matiere.nom} : ${cours.classe.nomClasse}</legend>
+    <div  class="buttonAjout">
+    	<input type="button" name="New" value="&{'application.enseignant.ajouterPartiel'}" onclick="window.location.href='@{EnseignantController.ajouteExamens(cours.id,randomID)}'">
+	</div>
   </fieldset>
   
   

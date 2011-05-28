@@ -63,6 +63,18 @@ public class EnseignantController extends Controller {
 	}
 	
 	/**
+	 * Affiche le formulaire d'ajout d'examens pour un cours selectionne.
+	 * @param id identifiant du cours (<=> show(id) pour un post )dans le tuto play
+	 * => Selection de l'id a ajouter dans la vue
+	 */
+	public static void ajouteExamens(
+			long id, 
+	        String randomID) {
+		Cours cours = Cours.findById(id);
+	    render("enseignant/ajouteExamens.html", cours, randomID);
+	}
+	
+	/**
 	 * @param id identifiant du cours (<=> show(id) pour un post )dans le tuto play
 	 * => Selection de l'id a ajouter dans la vue
 	 */
@@ -75,7 +87,7 @@ public class EnseignantController extends Controller {
 		 	Cours cours = Cours.findById(id);
 		    if(validation.hasErrors()) {
 		    	flash.error("Formulaire invalide");
-		        render("Enseignant/examenForm.html", cours, randomID);
+		        render("Enseignant/ajouteExamens.html", cours, randomID);
 		    }
 		    Examen examen = new Examen(nom, date, coef, cours);
 		    examen.save();
@@ -86,7 +98,7 @@ public class EnseignantController extends Controller {
 		}
 	 
 	 
-		/**
+	 /**
 		 * Affiche les résultats pour un examen selectionne. les résultats sont modifiables
 		 * si la validation n'a pas été demandée. 
 		 * A partie de l'examen, on peut trouver les notes par acces direct dans la vue
