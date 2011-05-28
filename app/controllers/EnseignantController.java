@@ -1,5 +1,8 @@
  package controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -81,16 +84,34 @@ public class EnseignantController extends Controller {
 	 public static void creeExamen(
 			 	long id,
 		        @Required(message="A name is required") String nom, 
-		        @Required(message="A date is required") Date date, 
+		        @Required(message="A day is required") String day, 
+		        @Required(message="A month is required") String month, 
+		        @Required(message="A year is required") String year, 
 		        @Required(message="A coefficient is required") Float coef, 
 		        String randomID) {
 		 	Cours cours = Cours.findById(id);
 		    if(validation.hasErrors()) {
-		    	flash.error("Formulaire invalide");
+		    	
+		    	 for(play.data.validation.Error error : validation.errors()) {
+		             System.out.println(error.message());
+		         }
+		    	 flash.error("Formulaire invalide");
 		        render("Enseignant/ajouteExamens.html", cours, randomID);
 		    }
-		    Examen examen = new Examen(nom, date, coef, cours);
+		    
+		    DateFormat formatter ; 
+		    Date dateExam ;
+		    String date = day + "-" + month + "-" + year;
+		     formatter = new SimpleDateFormat("dd-MM-yy");
+		     try {
+				dateExam = (Date)formatter.parse(date);
+		    Examen examen = new Examen(nom, dateExam, coef, cours);
 		    examen.save();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
 		    flash.success("Examen ajouté");
 		    Cache.delete(randomID);
 		    // On revient sur la page d'affichage des examens du cours

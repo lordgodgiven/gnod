@@ -43,14 +43,21 @@
 							<ul> &{'application.user.connected', prenom, nom}</ul>
 						</div>	
 					#{/if}	
-					#{if flash.error}
-					    <p style="color:#c00">
-					        ${flash.error}
-					    </p>
-					#{/if}				
+									
 					<div class="document">
 						<div class="dcontent">
-							
+						#{if flash.error}
+					    <div class="flashError">
+					        ${flash.error}
+					        
+					    </div><div class="clear"></div>
+						#{/if}	
+						#{if flash.success}
+					    <div class="flashSuccess">
+					        ${flash.success}
+					        
+					    </div><div class="clear"></div>
+						#{/if}	
 							
 							#{doLayout /}
 						</div>
