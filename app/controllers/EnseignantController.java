@@ -1,9 +1,8 @@
  package controllers;
 
-import groovyjarjarantlr.collections.List;
-
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import models.Cours;
@@ -112,7 +111,7 @@ public class EnseignantController extends Controller {
 		// TODO : gérer le nombre dynamique de note a entrer
 		// Apparemment, des listes groovy existent : a faire a deux
 		public static void modifResultats(long id,
-				List valNotes, 
+				List<Integer> valNotes, 
 		        String randomID) {
 			Examen examen = Examen.findById(id);
 			if(validation.hasErrors()) {
@@ -124,7 +123,7 @@ public class EnseignantController extends Controller {
 		    } else if (examen.notes != null && examen.notes.size() > 0){
 		    	int cpt = 0;
 		    	for (Note note : examen.notes) {
-		    		note.note = (Integer) valNotes.elementAt(cpt);
+		    		note.note = (Integer) valNotes.get(cpt);
 		    		note.save();
 		    		cpt++;
 		    	}
