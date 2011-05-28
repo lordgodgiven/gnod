@@ -43,14 +43,41 @@ public class ScolariteController extends Controller {
     /*********************************************************************************/
 	
 	/**
-	 * Renvoi les classes et la liste des etudiants sans classe
+	 * Renvoi les 20 premieres classes et la liste des etudiants sans classe
 	 * */
 	public static void listeClasses() {
-		List<Classe> classes = Classe.findAll();
+		List<Classe> liste20Classes = Classe.find20Classes();
+		// Booleens pour savoir si un appel a previous/next est possible
+		renderArgs.put("previous", false);
+		renderArgs.put("next", (Classe.findAll().size() > 20));
 		List<Etudiant> etudiantsSansClasse = Etudiant.sansClasse();
-		render(classes, etudiantsSansClasse);
+		render(liste20Classes, etudiantsSansClasse);
 	}
 	
+	/**
+	 * Renvoi les 20 prochaines classes dans l'ordre alphabetique
+	 * @param id identifiant de la derniere classe affichee
+	 */
+	public static void listeNextClasses(Long id) {
+		List<Classe> liste20Classes = Classe.next20Classes(id);
+		renderArgs.put("previous", true);
+		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un next
+		renderArgs.put("next", (liste20Classes.size() == 20));
+		render("Scolarite/listeClasses.html", liste20Classes);
+	} 
+	
+	/**
+	 * Renvoi les 20 precedente classes dans l'ordre alphabetique
+	 * @param id identifiant de la derniere classes affichee
+	 */
+	public static void listePreviousClasses(Long id) {
+		List<Classe> liste20Classes = Classe.previous20Classes(id);
+		renderArgs.put("next", true);
+		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un previous
+		renderArgs.put("previous", (liste20Classes.size() == 20));
+		render("Scolarite/listeClasses.html", liste20Classes);
+	} 
+
 	/**
 	 * Supprimer une classe
 	 * @param id identifiant de la classe a supprimer
@@ -128,7 +155,7 @@ public class ScolariteController extends Controller {
 	 * Renvoi les 20 premieres matieres dans l'ordre alphabetique
 	 * */
 	public static void listeCours() {
-		List<Matiere> liste20Matieres = Matiere.find20Matiere();
+		List<Matiere> liste20Matieres = Matiere.find20Matieres();
 		// Booleens pour savoir si un appel a previous/next est possible
 		renderArgs.put("previous", false);
 		renderArgs.put("next", (Matiere.findAll().size() > 20));
@@ -237,10 +264,10 @@ public class ScolariteController extends Controller {
     		cours.classe = classe;
     		cours.matiere = matiere;
     		cours.enseignant = enseignant;
-    		flash.success("Cours modifiée");
+    		flash.success("Cours modifié");
     	} else {
     		cours = new Cours(classe, matiere, enseignant);
-    		flash.success("Cours ajoutée");
+    		flash.success("Cours ajouté");
     	}
     	cours.save();
     	ScolariteController.listeCours();
@@ -265,7 +292,7 @@ public class ScolariteController extends Controller {
 	 * Renvoi les 20 prochains enseignants dans l'ordre alphabetique
 	 * @param id identifiant du dernier enseignant affiche
 	 */
-	public static void listeNextEnseignant(Long id) {
+	public static void listeNextEnseignants(Long id) {
 		List<Enseignant> liste20Enseignants = Enseignant.next20Enseignants(id);
 		renderArgs.put("previous", true);
 		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un next
@@ -371,10 +398,10 @@ public class ScolariteController extends Controller {
     		enseignant.login = login;
     		enseignant.password = password;
     		enseignant.dateNaissance = dateNaissance;
-    		flash.success("Enseignant modifiée");
+    		flash.success("Enseignant modifié");
     	} else {
     		enseignant = new Enseignant(login, password, nom, prenom, dateNaissance);
-    		flash.success("Enseignant ajoutée");
+    		flash.success("Enseignant ajouté");
     	}
     	enseignant.save();
     	ScolariteController.listeEnseignants();
@@ -399,7 +426,7 @@ public class ScolariteController extends Controller {
 	 * Renvoi les 20 prochains etudiants dans l'ordre alphabetique
 	 * @param id identifiant du dernier etudiant affiche
 	 */
-	public static void listeNextEtudiant(Long id) {
+	public static void listeNextEtudiants(Long id) {
 		List<Etudiant> liste20Etudiants = Etudiant.next20Etudiants(id);
 		renderArgs.put("previous", true);
 		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un next
@@ -505,12 +532,123 @@ public class ScolariteController extends Controller {
     		etudiant.login = login;
     		etudiant.password = password;
     		etudiant.dateNaissance = dateNaissance;
-    		flash.success("Etudiant modifiée");
+    		flash.success("Etudiant modifié");
     	} else {
     		etudiant = new Etudiant(login, password, nom, prenom, dateNaissance);
-    		flash.success("Etudiant ajoutée");
+    		flash.success("Etudiant ajouté");
     	}
     	etudiant.save();
     	ScolariteController.listeEtudiants();
+    }
+    
+    /*********************************************************************************/
+    /**********************        PARTIE MATIERE        *****************************/
+    /*********************************************************************************/
+	
+    /**
+	 * Renvoi les 20 premieres matiere dans l'ordre alphabetique
+	 * */
+	public static void listeMatieres() {
+		List<Matiere> liste20Matieres = Matiere.find20Matieres();
+		// Booleens pour savoir si un appel a previous/next est possible
+		renderArgs.put("previous", false);
+		renderArgs.put("next", (Matiere.findAll().size() > 20));
+		render(liste20Matieres);
+	} 
+	
+	/**
+	 * Renvoi les 20 prochaines matieres dans l'ordre alphabetique
+	 * @param id identifiant de la derniere matiere affiche
+	 */
+	public static void listeNextMatieres(Long id) {
+		List<Matiere> liste20Matieres = Matiere.next20Matieres(id);
+		renderArgs.put("previous", true);
+		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un next
+		renderArgs.put("next", (liste20Matieres.size() >= 20));
+		render("Scolarite/listeMatieres.html", liste20Matieres);
+	} 
+	
+	/**
+	 * Renvoi les 20 precedentes matieres dans l'ordre alphabetique
+	 * @param id identifiant de la derniere matiere affiche
+	 */
+	public static void listePreviousMatieres(Long id) {
+		List<Matiere> liste20Matieres = Matiere.previous20Matieres(id);
+		renderArgs.put("next", true);
+		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un previous
+		renderArgs.put("previous", (liste20Matieres.size() >= 20));
+		render("Scolarite/listeMatieres.html", liste20Matieres);
+	} 
+	
+    /**
+     * Methode de recherche d'une matiere a partir d'une chaine saisie. Appelee par un fichier Javascript
+     * @param nom chaine a rechercher parmis les noms de matiere
+     * @return une chaine JSon a interpreter dans le fichier Javascipt appelant
+     */
+    public void rechercheMatiere(String nom) {
+    	List<Matiere> lstMatieres = Matiere.cherche(nom);
+    	renderJSON(lstMatieres);
+    }
+	
+	/**
+	 * Supprimer une matiere
+	 * @param id identifiant de la matiere a supprimer
+	 */
+	public static void supprimerMatieres(long id) {
+		Matiere matiere = Matiere.findById(id);
+		matiere._delete();
+	}
+	
+	/**
+	 * Chargement du formulaire de creation/modification d'une matiere
+	 * @param idMatiere identifiant de la matiere a modifier
+	 */
+    public static void matiereForm(Long idMatiere) {    	
+        if(idMatiere != null) {
+        	Matiere matiere = Matiere.findById(idMatiere);
+            render(matiere);
+        }
+        render();
+    }
+    
+    /**
+     * Creation/Modification d'une Matiere
+     * @param id identifiant de la matiere si modification
+     * @param nom nom de la matiere
+     */
+    public static void postMatieres(long id,
+	        @Required(message="Un nom est requis") String nom, 
+	        		String randomID) {
+    	if(validation.hasErrors()) {
+	    	flash.error("Formulaire invalide");
+	    	Matiere matierePrecharge = null;	 
+    		if (id > 0)
+    			matierePrecharge = Matiere.findById(id);
+    		else
+    			matierePrecharge = new Matiere(nom);
+	        render("Scolarite/matiereForm.html", matierePrecharge, randomID);
+	    }
+    	if (Matiere.exist(nom)) {
+    		flash.error("Le nom de votre matiere est déjà utilisé");
+    		Matiere matierePrecharge = null;
+ 
+    		if (id > 0)
+    			matierePrecharge = Matiere.findById(id);
+    		else
+    			matierePrecharge = new Matiere(nom);
+    		
+	        render("Scolarite/matiereForm.html", matierePrecharge, randomID);
+    	}
+    	Matiere matiere = null;
+    	if (id > 0) {
+    		matiere = Matiere.findById(id);
+    		matiere.nom = nom;
+    		flash.success("Matiere modifiée");
+    	} else {
+    		matiere = new Matiere(nom);
+    		flash.success("Matiere ajoutée");
+    	}
+    	matiere.save();
+    	ScolariteController.listeMatieres();
     }
 }
