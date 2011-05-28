@@ -29,11 +29,20 @@ public class Matiere extends Model {
 		this.nom = nom;
 	}
 	
+    /**
+     * Methode de recherche d'une matiere a partir d'une chaine saisie
+     * @param nom chaine a rechercher parmis les noms de matiere
+     * @return la liste des matieres correspondant a la recherche
+     */
+	public static List<Matiere> cherche(String nom) {
+		return 	Matiere.find("nom like ?", "%" +nom+ "%").fetch();
+	}
+	
 	/**
 	 * Permet d'obtenir la liste des 20 premiers matieres dans l'ordre alphabetique
 	 * @return la liste de maximum 20 matiere
 	 */
-	public static List<Matiere> find20Matiere() {
+	public static List<Matiere> find20Matieres() {
 		List<Matiere> allMatieres = Matiere.find("order by nom asc").fetch();
 		// On veut les 20 premieres
 		List<Matiere> matieres = new ArrayList<Matiere>();
