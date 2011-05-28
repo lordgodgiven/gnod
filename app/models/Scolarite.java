@@ -39,8 +39,8 @@ public class Scolarite extends Model {
 	 * @return true si le login est deja pris, false sinon
 	 */
 	public static boolean exist(String login) {
-		return (Etudiant.find("byLogin", login) != null 
-				&& Enseignant.find("byLogin", login) != null
-				&& Scolarite.find("byLogin", login) != null);
+		return (Etudiant.find("byLogin", login).first() != null 
+				|| Enseignant.find("byLogin", login).first() != null
+				|| Scolarite.find("byLogin", login).first() != null);
 	}
 }
