@@ -38,6 +38,10 @@ public class ScolariteController extends Controller {
 		render("scolarite/index.html");
 	}
 	
+    /*********************************************************************************/
+    /**********************        PARTIE CLASSE            **************************/
+    /*********************************************************************************/
+	
 	/**
 	 * Renvoi les classes et la liste des etudiants sans classe
 	 * */
@@ -115,6 +119,10 @@ public class ScolariteController extends Controller {
     	List<Classe> lstClasses = Classe.cherche(chaine);
     	renderJSON(lstClasses);
     }
+    
+    /*********************************************************************************/
+    /**********************           PARTIE COURS             ***********************/
+    /*********************************************************************************/
     
 	/**
 	 * Renvoi les 20 premieres matieres dans l'ordre alphabetique
@@ -238,7 +246,11 @@ public class ScolariteController extends Controller {
     	ScolariteController.listeCours();
     }
     
-	/**
+    /*********************************************************************************/
+    /**********************        PARTIE ENSEIGNANT        **************************/
+    /*********************************************************************************/
+	
+    /**
 	 * Renvoi les 20 premiers enseignants dans l'ordre alphabetique
 	 * */
 	public static void listeEnseignants() {
@@ -270,7 +282,7 @@ public class ScolariteController extends Controller {
 		renderArgs.put("next", true);
 		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un previous
 		renderArgs.put("previous", (liste20Enseignants.size() >= 20));
-		render("Scolarite/listeCours.html", liste20Enseignants);
+		render("Scolarite/listeEnseignants.html", liste20Enseignants);
 	} 
 	
     /**
@@ -294,7 +306,7 @@ public class ScolariteController extends Controller {
 	
 	/**
 	 * Chargement du formulaire de creation/modification d'un enseignant
-	 * @param idEnseignant identifiant du cours a modifier
+	 * @param idEnseignant identifiant de l'enseignant a modifier
 	 */
     public static void enseignantForm(Long idEnseignant) {    	
         if(idEnseignant != null) {
@@ -366,5 +378,139 @@ public class ScolariteController extends Controller {
     	}
     	enseignant.save();
     	ScolariteController.listeEnseignants();
+    }
+    
+    /*********************************************************************************/
+    /**********************        PARTIE ETUDIANT        ****************************/
+    /*********************************************************************************/
+	
+    /**
+	 * Renvoi les 20 premiers etudiants dans l'ordre alphabetique
+	 * */
+	public static void listeEtudiants() {
+		List<Etudiant> liste20Etudiants = Etudiant.find20Etudiants();
+		// Booleens pour savoir si un appel a previous/next est possible
+		renderArgs.put("previous", false);
+		renderArgs.put("next", (Etudiant.findAll().size() > 20));
+		render(liste20Etudiants);
+	} 
+	
+	/**
+	 * Renvoi les 20 prochains etudiants dans l'ordre alphabetique
+	 * @param id identifiant du dernier etudiant affiche
+	 */
+	public static void listeNextEtudiant(Long id) {
+		List<Etudiant> liste20Etudiants = Etudiant.next20Etudiants(id);
+		renderArgs.put("previous", true);
+		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un next
+		renderArgs.put("next", (liste20Etudiants.size() >= 20));
+		render("Scolarite/listeEtudiants.html", liste20Etudiants);
+	} 
+	
+	/**
+	 * Renvoi les 20 precedents etudiants dans l'ordre alphabetique
+	 * @param id identifiant du dernier etudiant affiche
+	 */
+	public static void listePreviousEtudiants(Long id) {
+		List<Etudiant> liste20Etudiants = Etudiant.previous20Etudiants(id);
+		renderArgs.put("next", true);
+		// Si la liste n'est pas pleine, c'est qu'on ne peut pas appeler encore un previous
+		renderArgs.put("previous", (liste20Etudiants.size() >= 20));
+		render("Scolarite/listeEtudiants.html", liste20Etudiants);
+	} 
+	
+    /**
+     * Methode de recherche d'un etudiant a partir d'une chaine saisie. Appelee par un fichier Javascript
+     * @param chaine chaine a rechercher parmis les nom et prenom de l'etudiant
+     * @return une chaine JSon a interpreter dans le fichier Javascipt appelant
+     */
+    public void rechercheEtudiant(String chaine) {
+    	List<Etudiant> lstEtudiants = Etudiant.cherche(chaine);
+    	renderJSON(lstEtudiants);
+    }
+	
+	/**
+	 * Supprimer un etudiant
+	 * @param id identifiant de l'etudiant a supprimer
+	 */
+	public static void supprimerEtudiants(long id) {
+		Etudiant etudiant = Etudiant.findById(id);
+		etudiant._delete();
+	}
+	
+	/**
+	 * Chargement du formulaire de creation/modification d'un etudiant
+	 * @param idEtudiant identifiant de l'etudiant a modifier
+	 */
+    public static void etudiantForm(Long idEtudiant) {    	
+        if(idEtudiant != null) {
+        	Etudiant etudiant = Etudiant.findById(idEtudiant);
+            render(etudiant);
+        }
+        render();
+    }
+    
+    /**
+     * Creation/Modification d'un etudiant
+     * @param id identifiant de l'etudiant si modification
+     * @param nom nom de l'etudiant
+     * @param prenom prenom de l'etudiant
+     * @param login login de l'etudiant (doit être unique)
+     * @param password mot de passe de l'etudiant
+     * @param passwordVerif verification de la saisie du mot de passe
+     * @param dateNaissance
+     */
+    public static void postEtudiants(long id,
+	        @Required(message="Un nom est requis") String nom, 
+	        @Required(message="Un prenom est requis") String prenom,
+	        @Required(message="Un login est requis") String login,
+	        @Required(message="Un mot de passe est requis") String password,
+	        @Required(message="Un mot de passe est requis") String passwordVerif,
+	        @Required(message="Une date de naissance est requise") Date dateNaissance,
+	        		String randomID) {
+    	if(validation.hasErrors()) {
+	    	flash.error("Formulaire invalide");
+	    	Etudiant etudiantPrecharge = null;	 
+    		if (id > 0)
+    			etudiantPrecharge = Etudiant.findById(id);
+    		else
+    			etudiantPrecharge = new Etudiant(login, password, nom, prenom, dateNaissance);
+	        render("Scolarite/etudiantForm.html", etudiantPrecharge, randomID);
+	    }
+    	if (!password.equals(passwordVerif)) {
+    		flash.error("Mots de passe non identiques");
+    		Etudiant etudiantPrecharge = null;	 
+    		if (id > 0)
+    			etudiantPrecharge = Etudiant.findById(id);
+    		else
+    			etudiantPrecharge = new Etudiant(login, password, nom, prenom, dateNaissance);
+	        render("Scolarite/etudiantForm.html", etudiantPrecharge, randomID);
+    	}
+    	if (Etudiant.exist(login)) {
+    		flash.error("Le login est déjà utilisé");
+    		Etudiant etudiantPrecharge = null;
+ 
+    		if (id > 0)
+    			etudiantPrecharge = Etudiant.findById(id);
+    		else
+    			etudiantPrecharge = new Etudiant(login, password, nom, prenom, dateNaissance);
+    		
+	        render("Scolarite/etudiantForm.html", etudiantPrecharge, randomID);
+    	}
+    	Etudiant etudiant = null;
+    	if (id > 0) {
+    		etudiant = Etudiant.findById(id);
+    		etudiant.nom = nom;
+    		etudiant.prenom = prenom;
+    		etudiant.login = login;
+    		etudiant.password = password;
+    		etudiant.dateNaissance = dateNaissance;
+    		flash.success("Etudiant modifiée");
+    	} else {
+    		etudiant = new Etudiant(login, password, nom, prenom, dateNaissance);
+    		flash.success("Etudiant ajoutée");
+    	}
+    	etudiant.save();
+    	ScolariteController.listeEtudiants();
     }
 }
