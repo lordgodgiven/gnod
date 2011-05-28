@@ -71,6 +71,25 @@ public class BasicTest extends UnitTest {
 		    // Test 
 		    assertNotNull(mat);
 		    assertEquals("ChabanasM", mat.login);
+		    assertTrue(Enseignant.exist("ChabanasM"));
+		    assertTrue(Etudiant.exist("ChabanasM"));
+		    assertTrue(Scolarite.exist("ChabanasM"));
+		    
+		    assertNull(Enseignant.find("byLogin", "ChabanasMV").first());
+		    if (Etudiant.find("byLogin", "ChabanasMV").first() != null) {
+			    Etudiant etudiant = Etudiant.find("byLogin", "ChabanasMV").first();
+			    System.out.println("Etudiant trouve " +etudiant.login);
+			    System.out.println("Etudiant trouve " +etudiant.password);
+			    System.out.println("Etudiant trouve " +etudiant.prenom);
+			    System.out.println("Etudiant trouve " +etudiant.nom);
+		    }
+		    
+		    assertNull(Etudiant.find("byLogin", "ChabanasMV").first());
+		    assertNull(Scolarite.find("byLogin", "ChabanasMV").first());
+
+		    assertFalse(Enseignant.exist("ChabanasMV"));
+		    assertFalse(Etudiant.exist("Chabanas"));
+		    assertFalse(Scolarite.exist("Chaban"));
 		} catch (java.text.ParseException e) {
 			e.printStackTrace();
 		}
@@ -79,14 +98,20 @@ public class BasicTest extends UnitTest {
 	@Test
 	public void creeEtChercheEtudiant() {
 		try {
-			new Etudiant("Romain", "Durant", "Durantr", "secret",  
+			new Etudiant("durantr", "secret", "Durant", "Romain",   
 			    		new SimpleDateFormat("dd/MM/yyyy").parse("31/02/1987")).save();
 		    // Retrouver l'�tudiant � partir de son login
-			Etudiant etudiant = Etudiant.find("byLogin", "Durantr").first();
+			Etudiant etudiant = Etudiant.find("byLogin", "durantr").first();
 		    
 		    // Test 
 		    assertNotNull(etudiant);
-		    assertEquals("Durantr", etudiant.login);
+		    assertEquals("durantr", etudiant.login);
+		    assertTrue(Enseignant.exist("durantr"));
+		    assertTrue(Etudiant.exist("durantr"));
+		    assertTrue(Scolarite.exist("durantr"));
+		    assertFalse(Enseignant.exist("durantrV"));
+		    assertFalse(Etudiant.exist("durant"));
+		    assertFalse(Scolarite.exist("dura"));
 		} catch (java.text.ParseException e) {
 			e.printStackTrace();
 		}
@@ -101,6 +126,12 @@ public class BasicTest extends UnitTest {
 		// Test 
 		assertNotNull(scolarite);
 		assertEquals("lecapona", scolarite.login);
+	    assertTrue(Enseignant.exist("lecapona"));
+	    assertTrue(Etudiant.exist("lecapona"));
+	    assertTrue(Scolarite.exist("lecapona"));
+	    assertFalse(Enseignant.exist("lecaponaV"));
+	    assertFalse(Etudiant.exist("lecapon"));
+	    assertFalse(Scolarite.exist("lecap"));
 	}
 	
 	@Test

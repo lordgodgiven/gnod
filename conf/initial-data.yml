@@ -6,7 +6,7 @@
 #   password: secret
 
 
-Scolarite(bob):
+Scolarite(bobi):
     login:          initScol
     password:       secret
     isAdmin:        true
