@@ -29,7 +29,8 @@
 				</div>
 				<div id="rtcontent">				               
 					<!--head starts-->
-					<div class="head translate">&{'application.title'}</div>
+				<div class="head translate">&{'application.title'}</div>
+
 					<div id="menulinks">
 						<ul>
 							<li><a href="@{Application.index()}" class="scrcast translate">&{'application.home'}</a></li>
@@ -39,7 +40,13 @@
 										<a href="@{Application.disconnect()}" class="scrcast">&{'application.deconnection'}</a>
 									</li>
 						</ul>
-					</div>	
+					</div>
+					<div class="clear"></div>
+				<a href id="translateToFr"><img src="/public/images/flag_fr.jpeg" alt="" /></a>
+				<a href id="translateToEn"><img src="/public/images/flag_en.jpeg" alt="" /></a>
+				<a href id="translateToEs"><img src="/public/images/flag_es.jpeg" alt="" /></a>
+				<a href id="translateToDe"><img src="/public/images/flag_de.jpeg" alt="" /></a>
+					
 					<div class="clear"></div>
 					#{if status == 'connected'}
 						<div class="tagln">
@@ -48,6 +55,7 @@
 					#{/if}	
 									
 					<div class="document">
+										
 						<div class="dcontent">
 						#{if flash.error}
 					    <div class="flashError">
@@ -66,12 +74,9 @@
 						</div>
 					</div>
 				</div>
-				<br />		
-				<a href id="translateToFr"><img src="/public/images/flag_fr.jpeg" alt="" /></a>
-				<a href id="translateToEn"><img src="/public/images/flag_en.jpeg" alt="" /></a>
-				<a href id="translateToEs"><img src="/public/images/flag_es.jpeg" alt="" /></a>
-				<a href id="translateToDe"><img src="/public/images/flag_de.jpeg" alt="" /></a>
+				<br />	
 				#{if status == 'connected'}
+				#{if typeUser != 'scolarite'}
 				<div id="feeds">
                 	<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>
                     <div class="ltdetail">
@@ -85,6 +90,7 @@
                     </ul>
                     </div>
                 </div>   
+                #{/if}
 				<div class="clear"></div>	
 				#{/if}	
 				<!--footer starts-->
