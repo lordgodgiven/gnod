@@ -40,15 +40,20 @@ img{border:0;}
 	border-color: white;
 }
 
+.outsideField table tr td{
+	width: 300px;
+	vertical-align: top;
+}
+
 .insideField{
 	border: solid;
 	border-color: #689E18;
-	float:left;
 }
 
 .insideField legend{
 	border: solid;
 	border-color: #689E18;
+	
 }
 
 .insideField a{
@@ -64,15 +69,22 @@ img{border:0;}
 	border-left: thin;
 	border-left-style:solid;
 	border-left-color: black;
-	border-bottom: thin;
-	border-bottom-style:solid;
-	border-bottom-color: black;
 	padding-left: 10px;
 	margin-bottom: 5px;
+	background-color: #B9EA71;
+}
+
+.divNotLink{
+	border-left: thin;
+	border-left-style:solid;
+	border-left-color: black;
+	padding-left: 10px;
+	margin-bottom: 5px;
+	background-color: #B9EA71;
 }
 
 .divLink:hover{
-	background-color: #B9EA71;
+	background-color: #7AB91C;
 	cursor:pointer;
 }
 
@@ -101,8 +113,8 @@ img{border:0;}
 		
 }
 
-.listExam ul{
-		background-color: #B9EA71;
+.listExam div{
+		margin-top : 5px;
 }
 
 .button{
@@ -114,7 +126,6 @@ img{border:0;}
 .buttonAjout{
 	 float: right;
 	 color:black; 
-	 font-weight:bold;
 		
 }
 
@@ -380,7 +391,18 @@ img{border:0;}
 	width:310px;
 	margin-right:24px;
 	margin-top: -5px;
-	float:right;
+	position:absolute;
+	right:-20px;
+	top:18px;
+}
+
+#feeds li a{
+	width:200px;
+	white-space:normal;
+}
+
+.lang{
+	margin-left: 50px;	
 }
 
 #social{

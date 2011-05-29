@@ -10,8 +10,10 @@ application.feed.suscribe=S'abonner au flux
 
 #clés des enseignants
 application.accueil.enseignant=Accueil enseignant :
-application.enseignant.feed.suscribe=Flux de publication des examens à noter
+application.enseignant.feed.suscribe=Flux RSS des examens à noter
 application.enseignant.ajouterPartiel=Ajouter un examen
+application.enseignant.ajouterNotes=Ajouter des notes
+application.enseignant.modifierNotes=Modifier des notes
 application.enseignant.nouvelExam=Nouvel examen
 
 #clés du personnel de scolarité
@@ -23,7 +25,7 @@ application.accueil.etudiant=Accueil étudiant :
 application.etudiant.diffusion.titre=Note de &{%s} de la classe &{%s} :
 application.etudiant.detail.matiere=Détail de &{%s} :
 application.etudiant.detail.moyenne=Détail de la moyenne :
-application.etudiant.feed.suscribe=Flux de publication des nouvelles notes
+application.etudiant.feed.suscribe=Flux RSS des nouvelles notes
 
 #clés des Menus
 application.menu.cours=Cours

@@ -99,8 +99,6 @@ public class Application extends Controller {
 		
 	}
 	
-	
-	
 	@After
 	static void verifConnectedUser() {
 		if (typeUser != null) {
