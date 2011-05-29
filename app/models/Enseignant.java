@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 @Entity
@@ -148,51 +149,39 @@ public class Enseignant extends Model {
 				|| Enseignant.find("byLogin", login).first() != null
 				|| Scolarite.find("byLogin", login).first() != null);
 	}
-	
-    /**
+		
+	/**
      * Methode de recherche d'un enseignant a partir d'une chaine saisie
      * @param chaine chaine a rechercher parmis les noms/prenoms des enseignants
      * @return la liste des enseignants correspondant a la recherche
      */
 	public static List<Enseignant> cherche(String chaine) {
-		List<Enseignant> lstEnseignants = new ArrayList<Enseignant>();
-		StringTokenizer st = new StringTokenizer(chaine, " ", false);
-		String [] tabToken = new String[st.countTokens()];
-		int cpt = 0;
-		while (st.hasMoreElements()) {
-			tabToken[cpt] = st.nextToken();
-			cpt++;
+		List<Enseignant> lstEnseignants = Enseignant.findAll();
+		List<Enseignant> enseignantsMatch = new ArrayList<Enseignant>();
+		for (Enseignant enseignantTmp : lstEnseignants) {
+			String prenomNom = enseignantTmp.prenom+" "+enseignantTmp.nom;
+			if (prenomNom.toLowerCase().matches(".*" +chaine.toLowerCase()+ ".*"))
+				enseignantsMatch.add(enseignantTmp);
 		}
-		// saisie du nom ou du prenom
-		if (st.countTokens() == 1) {
-			lstEnseignants = Enseignant.find("byPrenomLike", "%" +tabToken[0]+ "%").fetch();
-			if (lstEnseignants.size() <= 0) {
-				lstEnseignants = Enseignant.find("byNomLike", "%" +tabToken[1]+ "%").fetch();
-			}
-		}
-		// saisie du type nom prenom ou prenom nom
-		else if (st.countTokens() == 2) {
-			lstEnseignants = Enseignant.find("byNomLikeAndPrenomLike", "%" +tabToken[0]+ "%", "%" +tabToken[1]+ "%").fetch();
-			if (lstEnseignants.size() <= 0) {
-				lstEnseignants = Enseignant.find("byNomLikeAndPrenomLike", "%" +tabToken[1]+ "%", "%" +tabToken[0]+ "%").fetch();
-				if (lstEnseignants.size() <= 0) {
-					// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
-					lstEnseignants = Enseignant.find("byNomLike", "%" +chaine+ "%").fetch();
-					if (lstEnseignants.size() <= 0) {
-						lstEnseignants = Enseignant.find("byPrenomLike", "%" +chaine+ "%").fetch();
+		if (enseignantsMatch.size() > 0) 
+			return enseignantsMatch;		
+		
+		// Sinon, on verifie la correspondance de recherche avec les sous chaines de la saisie
+		String [] tabToken = chaine.split("\\s");
+		// Seulement s'il y a des sous chaines
+		if (tabToken.length > 1) {
+			for (Enseignant enseignantTmp : lstEnseignants) {
+				String prenomNom = enseignantTmp.prenom+" "+enseignantTmp.nom;
+				int cptToken = 0;
+				while (cptToken < tabToken.length) {
+					if (prenomNom.toLowerCase().matches(".*" +tabToken[cptToken].toLowerCase()+ ".*")) {
+						enseignantsMatch.add(enseignantTmp);
+						cptToken = tabToken.length;
 					}
+					cptToken++;
 				}
 			}
 		}
-		// On a affaire a un prenom ou un nom compose (pour simplifier, on fait la recherche que sur un champ
-		// Sinon il faudrait decomposer toutes les combinaisons possibles en 2 puissance nombre de tokens)
-		else {
-			// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
-			lstEnseignants = Enseignant.find("byNomLike", "%" +chaine+ "%").fetch();
-			if (lstEnseignants.size() <= 0) {
-				lstEnseignants = Enseignant.find("byPrenomLike", "%" +chaine+ "%").fetch();
-			}
-		}
-		return lstEnseignants;
+		return enseignantsMatch;		
 	}
 }

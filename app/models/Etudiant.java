@@ -110,13 +110,11 @@ public class Etudiant extends Model {
 					Calendar.SEPTEMBER,15);
 		}
 		for (Note noteTmp : notes) {
-			System.out.println("Note " +noteTmp.note);
 			float cptCoefficient = 0, totalNote = 0;
 			// Si la note est validee qu'elle est de cette annee
 			// et que la moyenne de sa matiere n'a pas encore ete calculee :
 			if (noteTmp.examen.noteValidee && noteTmp.examen.date.after(dateDebutAnnee.getTime())
 					&& !retour.containsKey(noteTmp.examen.cours.matiere)) {
-				System.out.println("Calcul de la moyenne de la matiere " +noteTmp.examen.cours.matiere.nom);
 				for (Note noteTmp2 : notes) {
 					if (noteTmp2.examen.date.after(dateDebutAnnee.getTime()) 
 							&& noteTmp2.examen.noteValidee && noteTmp2.examen.cours.matiere.nom.equals(
@@ -125,16 +123,9 @@ public class Etudiant extends Model {
 						cptCoefficient += noteTmp2.examen.coef;
 					}
 				}
-				System.out.println("Total " +totalNote);
-				System.out.println("cptCoeff " +cptCoefficient);
 				retour.put(noteTmp.examen.cours.matiere, (Float) ((float) totalNote / (float)cptCoefficient));
 			}
 		}
-		System.out.println("------Liste des matières----------");
-		for (Matiere matiere : retour.keySet()) {
-			System.out.println("Matiere " +matiere.nom+ ", moyenne : " +retour.get(matiere));
-		}
-		System.out.println("------FIN liste des matières----------");
 		return retour;
 	}
 	
@@ -256,44 +247,32 @@ public class Etudiant extends Model {
      * @return la liste des etudiants correspondant a la recherche
      */
 	public static List<Etudiant> cherche(String chaine) {
-		List<Etudiant> lstEtudiants = new ArrayList<Etudiant>();
-		StringTokenizer st = new StringTokenizer(chaine, " ", false);
-		String [] tabToken = new String[st.countTokens()];
-		int cpt = 0;
-		while (st.hasMoreElements()) {
-			tabToken[cpt] = st.nextToken();
-			cpt++;
+		List<Etudiant> lstEtudiants = Etudiant.findAll();
+		List<Etudiant> etudiantsMatch = new ArrayList<Etudiant>();
+		for (Etudiant etudiantTmp : lstEtudiants) {
+			String prenomNom = etudiantTmp.prenom+" "+etudiantTmp.nom;
+			if (prenomNom.toLowerCase().matches(".*" +chaine.toLowerCase()+ ".*"))
+				etudiantsMatch.add(etudiantTmp);
 		}
-		// saisie du nom ou du prenom
-		if (st.countTokens() == 1) {
-			lstEtudiants = Etudiant.find("byPrenomLike", "%" +tabToken[0]+ "%").fetch();
-			if (lstEtudiants.size() <= 0) {
-				lstEtudiants = Etudiant.find("byNomLike", "%" +tabToken[1]+ "%").fetch();
-			}
-		}
-		// saisie du type nom prenom ou prenom nom
-		else if (st.countTokens() == 2) {
-			lstEtudiants = Etudiant.find("byNomLikeAndPrenomLike", "%" +tabToken[0]+ "%", "%" +tabToken[1]+ "%").fetch();
-			if (lstEtudiants.size() <= 0) {
-				lstEtudiants = Etudiant.find("byNomLikeAndPrenomLike", "%" +tabToken[1]+ "%", "%" +tabToken[0]+ "%").fetch();
-				if (lstEtudiants.size() <= 0) {
-					// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
-					lstEtudiants = Etudiant.find("byNomLike", "%" +chaine+ "%").fetch();
-					if (lstEtudiants.size() <= 0) {
-						lstEtudiants = Etudiant.find("byPrenomLike", "%" +chaine+ "%").fetch();
+		if (etudiantsMatch.size() > 0) 
+			return etudiantsMatch;		
+		
+		// Sinon, on verifie la correspondance de recherche avec les sous chaines de la saisie
+		String [] tabToken = chaine.split("\\s");
+		// Seulement s'il y a des sous chaines
+		if (tabToken.length > 1) {
+			for (Etudiant etudiantTmp : lstEtudiants) {
+				String prenomNom = etudiantTmp.prenom+" "+etudiantTmp.nom;
+				int cptToken = 0;
+				while (cptToken < tabToken.length) {
+					if (prenomNom.toLowerCase().matches(".*" +tabToken[cptToken].toLowerCase()+ ".*")) {
+						etudiantsMatch.add(etudiantTmp);
+						cptToken = tabToken.length;
 					}
+					cptToken++;
 				}
 			}
 		}
-		// On a affaire a un prenom ou un nom compose (pour simplifier, on fait la recherche que sur un champ
-		// Sinon il faudrait decomposer toutes les combinaisons possibles en 2 puissance nombre de tokens)
-		else {
-			// Disons qu'on a un nom ou un prenom compose (mais pas les deux)
-			lstEtudiants = Etudiant.find("byNomLike", "%" +chaine+ "%").fetch();
-			if (lstEtudiants.size() <= 0) {
-				lstEtudiants = Etudiant.find("byPrenomLike", "%" +chaine+ "%").fetch();
-			}
-		}
-		return lstEtudiants;
+		return etudiantsMatch;		
 	}
 }
