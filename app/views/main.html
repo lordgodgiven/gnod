@@ -8,95 +8,93 @@
             href="@{'/public/stylesheets/main.css'}" />
 		#{get 'moreStyles' /}
 		<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-		<script src="@{'/public/javascripts/client.js'}" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAjEf6WDKAo6oN-8nhaiR49BTneACZCPyRKHrLBh9DasPkWTJK_RTo6tNk2cE-828YgA3x1F152IkpK"></script>
+		<script src="@{'/public/javascripts/client.js'}" type="text/javascript" charset="utf-8"></script>		
+		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+		<script type="text/javascript">
+			google.load("language", "1");
+		</script>
 		#{get 'moreScripts' /}
-
 	</head>
 
-
     <body>
-    	<div id="wrapper">
-    		<!--container starts-->
-	    	<div id="container">
-			
-				<div id="ltcontent">
-					<!--hdlogo starts-->
-					<div id="hdlogo" align="center">
+		<div id="translation">
+		</div>
+		<div id="initial">
+			<div> Bonjour. comment se passe la traduction ?</div>
+			<div id="wrapper">
+				<div id="container">
+					<div id="ltcontent">
+						<div id="hdlogo" align="center">
 						
+						</div>
+						<div class="ltgap"></div>
 					</div>
-					 <div class="ltgap"></div>
-				</div>
-				<div id="rtcontent">				               
-					<!--head starts-->
-					<div class="head translate">&{'application.title'}</div>
-					<div id="menulinks">
-						<ul>
-							<li><a href="@{Application.index()}" class="scrcast translate">&{'application.home'}</a></li>
-							
-							#{menu as:typeUser/}
-									<li>
-										<a href="@{Application.disconnect()}" class="scrcast">&{'application.deconnection'}</a>
-									</li>
-						</ul>
-					</div>	
-					<div class="clear"></div>
-					#{if status == 'connected'}
+					<div id="rtcontent">				               
+						<div class="head">&{'application.title'}</div>
+						<div id="menulinks">
+							<ul>
+								<li><a href="@{Application.index()}" class="scrcast translate">&{'application.home'}</a></li>
+								#{menu as:typeUser/}
+								<li>
+									<a href="@{Application.disconnect()}" class="scrcast">&{'application.deconnection'}</a>
+								</li>
+							</ul>
+						</div>	
+						<div class="clear"></div>
+						#{if status == 'connected'}
 						<div class="tagln">
 							<ul> &{'application.user.connected', prenom, nom}</ul>
 						</div>	
-					#{/if}	
-									
-					<div class="document">
+						#{/if}	
 						<div class="dcontent">
-						#{if flash.error}
-					    <div class="flashError">
-					        ${flash.error}
-					        
-					    </div><div class="clear"></div>
-						#{/if}	
-						#{if flash.success}
-					    <div class="flashSuccess">
-					        ${flash.success}
-					        
-					    </div><div class="clear"></div>
-						#{/if}	
+							#{if flash.error}
+							<div class="flashError">
+								${flash.error}
+							</div>
+							<div class="clear"></div>
+							#{/if}	
+							#{if flash.success}
+							<div class="flashSuccess">
+								${flash.success}
+							</div>
+							<div class="clear"></div>
+							#{/if}	
 							
 							#{doLayout /}
 						</div>
 					</div>
-				</div>
-				<br />		
-				<a href id="translateToFr"><img src="/public/images/flag_fr.jpeg" alt="" /></a>
-				<a href id="translateToEn"><img src="/public/images/flag_en.jpeg" alt="" /></a>
-				<a href id="translateToEs"><img src="/public/images/flag_es.jpeg" alt="" /></a>
-				<a href id="translateToDe"><img src="/public/images/flag_de.jpeg" alt="" /></a>
-				#{if status == 'connected'}
-				<div id="feeds">
-                	<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>
-                    <div class="ltdetail">
-                    <ul>
-						#{if typeUser == 'etudiant'}
-							<li><a href="@{Export.rss}">&{'application.etudiant.feed.suscribe'}</a></li>
-						#{/if}
-						#{if typeUser == 'enseignant'}
-							<li><a href="@{Export.rss}">&{'application.enseignant.feed.suscribe'}</a></li>
-						#{/if}	
-                    </ul>
-                    </div>
-                </div>   
-				<div class="clear"></div>	
-				#{/if}	
-				<!--footer starts-->
-				<div id="footer">
-					<div class="copy">
-					&copy; 2011 Ensimag
+					<br />		
+					<select onchange="translate(this.options[this.selectedIndex].value);">
+						<option value="de">deutsch</option>
+						<option value="fr" onclick="original();">français</option>
+						<option value="en">english</option>
+						<option value="es">español</option>
+					</select>
+					#{if status == 'connected'}
+					<div id="feeds">
+						<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>
+						<div class="ltdetail">
+							<ul>
+								#{if typeUser == 'etudiant'}
+									<li><a href="@{Export.rss}">&{'application.etudiant.feed.suscribe'}</a></li>
+								#{/if}
+								#{if typeUser == 'enseignant'}
+									<li><a href="@{Export.rss}">&{'application.enseignant.feed.suscribe'}</a></li>
+								#{/if}	
+							</ul>
+						</div>
+					</div>   
+					<div class="clear"></div>	
+					#{/if}	
+					<div id="footer">
+						<div class="copy">
+						&copy; 2011 Ensimag
+						</div>
+						<div class="copy">
+							<span>&{'application.authors'}</span>
+						</div>
 					</div>
-					<div class="copy">
-						<span>&{'application.authors'}</span>
-					</div>
 				</div>
-				<!--footer ends-->
 			</div>
 		</div>
     </body>
