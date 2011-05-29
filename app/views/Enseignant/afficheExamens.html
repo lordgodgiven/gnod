@@ -10,8 +10,20 @@
 	
     <div class="listExam">
     #{list items:cours.examen, as : 'examen'}
-    	<ul> ${examen.nom} - ${examen.date.getDate()}/${examen.date.getMonth()}/${examen.date.getYear() + 1900} - ${examen.coef} </ul>
-
+    	
+    	<div class="divNotLink"> 
+	    	${examen.nom} 
+	    	#{if !examen.noteValidee}
+			    #{if examen.notes.isEmpty()}
+			    <input  class="buttonAjout" type="button" name="New" value="&{'application.enseignant.ajouterNotes'}" onclick="window.location.href='@{EnseignantController.afficheResultats(cours.id,examen.id)}'">
+				#{/if}
+       		    #{if !examen.notes.isEmpty()}
+			    <input  class="buttonAjout" type="button" name="New" value="&{'application.enseignant.modifierNotes'}" onclick="window.location.href='@{EnseignantController.ajouteExamens(cours.id,randomID)}'">
+    			<input  class="buttonAjout" type="button" name="New" value="&{'application.enseignant.validerNotes'}" onclick="window.location.href='@{EnseignantController.ajouteExamens(cours.id,randomID)}'">
+    			#{/if}
+       		#{/if}
+		</div>
+    	
 	#{/list}	
 	</div>
   </fieldset>

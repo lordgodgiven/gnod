@@ -3,8 +3,10 @@
 <form>
   <fieldset class="outsideField">
     <legend>&{'application.menu.cours'}</legend>
-    
+    <table>
     #{list items:matieres, as : 'matiere'}
+    	#{if matiere_parity == 'odd'}<tr><td> #{/if}
+    	#{if matiere_parity == 'even'}<td> #{/if}
     	<fieldset class="insideField">
     		<legend>${matiere}</legend>
     		#{list items:enseignant.cours, as : 'cours'}
@@ -13,8 +15,11 @@
   				#{/if}
  			#{/list}
   		</fieldset>
-  		#{if !matiere_isLast}<br/> #{/if}
+  		#{if matiere_parity == 'odd'}</td> #{/if}
+    	#{if matiere_parity == 'even'}</td></tr> #{/if}
+    	#{if matiere_isLast && matiere_parity == 'odd'}<td></td></tr> #{/if}
 	#{/list}
+	</table>
 
   </fieldset>
   
