@@ -109,7 +109,8 @@ public class EnseignantController extends Controller {
 		    examen.save();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				 flash.error("Erreur : " + e);
+			     render("Enseignant/ajouteExamens.html", cours, randomID);
 			}
 		    
 		    flash.success("Examen ajouté");
@@ -127,10 +128,11 @@ public class EnseignantController extends Controller {
 		 * @param id identifiant de l'examen (<=> show(id) pour un post )dans le tuto play
 		 * => Selection de l'id a ajouter dans la vue
 		 */
-		public static void afficheResultats(long id) {
-			Examen examen = Examen.findById(id);
+		public static void afficheResultats(long idcours, long idexam) {
+			Cours cours = Cours.findById(idcours);
+		    Examen examen = Examen.findById(idexam);
 		    String randomID = Codec.UUID();
-		    render("Enseignant/notesForm.html", examen, randomID);
+		    render("Enseignant/notesForm.html", cours, examen, randomID);
 		}
 		
 		/**
@@ -143,10 +145,11 @@ public class EnseignantController extends Controller {
 		 */
 		// TODO : gérer le nombre dynamique de note a entrer
 		// Apparemment, des listes groovy existent : a faire a deux
-		public static void modifResultats(long id,
+		public static void modifResultats(long idcours, long idexam,
 				List<Integer> valNotes, 
 		        String randomID) {
-			Examen examen = Examen.findById(id);
+			Cours cours = Cours.findById(idcours);
+		    Examen examen = Examen.findById(idexam);
 			if(validation.hasErrors()) {
 		        render("Enseignant/notesForm.html", examen, randomID);
 		    }
@@ -165,15 +168,16 @@ public class EnseignantController extends Controller {
 		    	/*Note note = new Note(etudiant, examen, valNote);
 		    	note.save();*/
 		    }
-			afficheResultats(id);
+			afficheResultats(idcours,idexam);
 		}
 		
 		/**
 		 * @param id identifiant de l'examen (<=> show(id) pour un post )dans le tuto play
 		 * => Selection de l'id a ajouter dans la vue
 		 */
-		public static void valideResultats(long id) {
-			Examen examen = Examen.findById(id);
+		public static void valideResultats(long idcours, long idexam) {
+			Cours cours = Cours.findById(idcours);
+		    Examen examen = Examen.findById(idexam);
 			if (examen.notes != null && examen.notes.size() > 0) {
 				examen.noteValidee = true;
 				// Mise a jours du flux RSS Etudiant a la validation du resultat
@@ -185,7 +189,7 @@ public class EnseignantController extends Controller {
 				NewsFeedGen.supprimeExamen(examen.cours.classe, examen);
 			} else {
 				flash.error("Vos notes ne sont pas renseignées");
-				afficheResultats(id);
+				afficheResultats(idcours,idexam);
 			}			
 		}
 }

@@ -1,0 +1,51 @@
+#{extends 'main.html' /}
+
+
+<form action="@{EnseignantController.creeExamen(id,nom,day,month,year,coef,randomID)}" method="GET">
+  <fieldset class="outsideField">
+    <legend><a href="@{EnseignantController.afficheExamens(cours.id)}">${cours.matiere.nom} : ${cours.classe.nomClasse}</a> : &{'application.enseignant.nouvelExam'}</legend>
+
+	
+	<input type="hidden" name="id" value="${cours.id}">
+	<input type="hidden" name="randomID" value="${randomID}">
+
+    
+    #{field 'Nom'}
+	<p>
+	  <label>&{field.name}</label>
+	  <input type="text" id="${field.id}" name="nom" value="${field.value}" class="${field.errorClass}">
+	  <span class="error">${field.error}</span>
+	</p>
+	#{/}
+    
+    #{field 'Date'}
+	<p>
+	  <label>&{field.name}</label>
+	  <input type="text" id="idday" name="day" value="${field.value}" class="${field.errorClass}">
+	  <input type="text" id="idmonth" name="month" value="${field.value}" class="${field.errorClass}">
+	  <input type="text" id="idyear" name="year" value="${field.value}" class="${field.errorClass}">
+	  <span class="error">${field.error}</span>
+	</p>
+	#{/}
+    
+    #{field 'Coefficient'}
+	<p>
+	  <label>&{field.name}</label>
+	  <input type="text" id="${field.id}" name="coef" value="${field.value}" class="${field.errorClass}">
+	  <span class="error">${field.error}</span>
+	</p>
+	#{/}
+    
+    
+    
+    
+    <div class="button">
+    	<input type="submit" value="Ajouter">
+	</div>
+  </fieldset>
+  
+  
+
+</form>
+
+
