@@ -8,6 +8,7 @@
             href="@{'/public/stylesheets/main.css'}" />
 		#{get 'moreStyles' /}
 		<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+		<script src="@{'/public/javascripts/client.js'}" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="https://www.google.com/jsapi?key=ABQIAAAAjEf6WDKAo6oN-8nhaiR49BTneACZCPyRKHrLBh9DasPkWTJK_RTo6tNk2cE-828YgA3x1F152IkpK"></script>
 		#{get 'moreScripts' /}
 
@@ -66,10 +67,10 @@
 					</div>
 				</div>
 				<br />		
-				<a href="translateToFr"><img src="/public/images/flag_fr.jpeg" alt="" /></a>
-				<a href="translateToEn"><img src="/public/images/flag_en.jpeg" alt="" /></a>
-				<a href="translateToEs"><img src="/public/images/flag_es.jpeg" alt="" /></a>
-				<a href="translateToDe"><img src="/public/images/flag_de.jpeg" alt="" /></a>
+				<a href id="translateToFr"><img src="/public/images/flag_fr.jpeg" alt="" /></a>
+				<a href id="translateToEn"><img src="/public/images/flag_en.jpeg" alt="" /></a>
+				<a href id="translateToEs"><img src="/public/images/flag_es.jpeg" alt="" /></a>
+				<a href id="translateToDe"><img src="/public/images/flag_de.jpeg" alt="" /></a>
 				#{if status == 'connected'}
 				<div id="feeds">
                 	<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>
