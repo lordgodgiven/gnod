@@ -26,6 +26,8 @@ public class ScolariteController extends Controller {
 				System.out.println("User null !!!!");
 				Application.disconnect();
 			}
+			renderArgs.put("nom", " ");
+			renderArgs.put("prenom", scolarite.login);
 			renderArgs.put("user", scolarite.login);
 			renderArgs.put("status", "connected");
 			renderArgs.put("typeUser", "scolarite");
