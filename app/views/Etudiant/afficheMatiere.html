@@ -1,0 +1,13 @@
+<!-- 
+- Charge les examens existants pour les cours de la matière :
+	-> Date du partiel
+	-> Note (si validée)
+	-> Si note validée
+		-> Si note diffusée par l'étudiant : possibilité d'aller sur la page diffusionnote.html
+		-> Sinon : possibilité de diffuser sa note.
+		
+- Affiche la moyenne de la matière
+-->
+#{extends 'main.html' /}
+#{set title:'DetailMatiere' /}
+&{'application.etudiant.detail.matiere', matiere.nom}

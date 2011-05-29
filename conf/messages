@@ -1,0 +1,34 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+application.title=GNOD : Gestion des notes
+application.deconnection=Déconnexion
+application.home=Accueil
+application.authors=par Romain DESTENAY et Julien OUDOT
+application.user.connected=Connecté en tant que %1$s %2$s
+application.feed.suscribe=S'abonner au flux
+
+#clés des enseignants
+application.accueil.enseignant=Accueil enseignant :
+application.enseignant.feed.suscribe=Flux de publication des examens à noter
+application.enseignant.ajouterPartiel=Ajouter un examen
+application.enseignant.nouvelExam=Nouvel examen
+
+#clés du personnel de scolarité
+application.accueil.scolarite=Accueil scolarité :
+
+#clés des étudiants
+application.accueil.etudiant=Accueil étudiant :
+#Syntaxe des clés à vérifier
+application.etudiant.diffusion.titre=Note de &{%s} de la classe &{%s} :
+application.etudiant.detail.matiere=Détail de &{%s} :
+application.etudiant.detail.moyenne=Détail de la moyenne :
+application.etudiant.feed.suscribe=Flux de publication des nouvelles notes
+
+#clés des Menus
+application.menu.cours=Cours
+application.menu.matiere=Matiere
+application.menu.enseignant=Enseignant
+application.menu.etudiant=Etudiant
+application.menu.classe=Classe
+application.menu.moyenne=Moyenne générale

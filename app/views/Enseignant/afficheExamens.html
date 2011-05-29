@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+
+<form>
+  <fieldset class="outsideField">
+    <legend>${cours.matiere.nom} : ${cours.classe.nomClasse}</legend>
+    <div  class="buttonAjout">
+    	<input type="button" name="New" value="&{'application.enseignant.ajouterPartiel'}" onclick="window.location.href='@{EnseignantController.ajouteExamens(cours.id,randomID)}'">
+	</div>
+	<div class="clear"></div>
+	
+    <div class="listExam">
+    #{list items:cours.examen, as : 'examen'}
+    	<ul> ${examen.nom} - ${examen.date.getDate()}/${examen.date.getMonth()}/${examen.date.getYear() + 1900} - ${examen.coef} </ul>
+
+	#{/list}	
+	</div>
+  </fieldset>
+  
+  
+
+</form>
+
+
