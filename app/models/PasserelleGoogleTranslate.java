@@ -1,6 +1,10 @@
 package models;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.w3c.dom.Document;
 
@@ -15,37 +19,20 @@ import play.libs.WS.HttpResponse;
 
 public class PasserelleGoogleTranslate {
 	public static void authenticate() {
-		HttpResponse res = WS.url("http://www.google.com").get();
-		int status = res.getStatus();
-		String type = res.getContentType();
+		URL url = new URL("https://ajax.googleapis.com/ajax/services/language/translate?" +
+        	"v=1.0&q=Hello,%20my%20friend!&langpair=en%7Ces&key=INSERT-YOUR-KEY&userip=INSERT-USER-IP");
+		URLConnection connection = url.openConnection();
+		connection.addRequestProperty("Referer", /* Enter the URL of your site here */);
 		
-		String content = res.getString();
-		Document xml = res.getXml();
-		JsonElement json = res.getJson();
-		InputStream is = res.getStream();
+		String line;
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		while((line = reader.readLine()) != null) {
+		builder.append(line);
+		}
 		
-		Promise<HttpResponse> futureResponse = WS.url(
-			    "http://www.google.com"
-			).getAsync();
-	    // TWITTER is a OAuth.ServiceInfo object
-	    // getUser() is a method returning the current user 
-	    if (OAuth.isVerifierResponse()) {
-	        // We got the verifier; 
-	        // now get the access tokens using the unauthorized tokens
-	    /*    TokenPair tokens = OAuth.service(TWITTER).requestAccessToken(
-	            getUser().getTokenPair()
-	        );
-	        // let's store them and go back to index
-	        getUser().setTokenPair(tokens);
-	        index();
-	    }
-	    OAuth twitt = OAuth.service(TWITTER);
-	    TokenPair tokens = twitt.requestUnauthorizedToken();
-	    // We received the unauthorized tokens 
-	    // we need to store them before continuing
-	    getUser().setTokenPair(tokens);
-	    // Redirect the user to the authorization page
-	    redirect(twitt.redirectUrl(tokens));*/
+		JSONObject json = new JSONObject(builder.toString());
+
 	    }
 	}
 }

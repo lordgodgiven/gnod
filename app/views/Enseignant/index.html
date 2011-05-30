@@ -10,7 +10,7 @@
     	<fieldset class="insideField">
     		<legend>${matiere}</legend>
     		#{list items:enseignant.cours, as : 'cours'}
-    			#{if cours.matiere.nom == matiere}
+    			#{if cours.matiere.nom == 'matiere'}
 		    	<div class="divLink" onclick="window.location.href = '@{EnseignantController.afficheExamens(cours.id)}'">  ${cours.classe.nomClasse} </div>
   				#{/if}
  			#{/list}
