@@ -25,6 +25,23 @@
 		</div>
     	
 	#{/list}	
+	 
+	#{list items:cours.examen, as : 'examen'}
+    	
+    	<div class="divNotLink"> 
+	    	${examen.nom} 
+	    	#{if !examen.noteValidee}
+			    #{if examen.notes.isEmpty()}
+			    <input  class="buttonAjout" type="button" name="New" value="&{'application.enseignant.ajouterNotes'}" onclick="window.location.href='@{EnseignantController.afficheResultats(cours.id,examen.id)}'">
+				#{/if}
+       		    #{if !examen.notes.isEmpty()}
+			    <input  class="buttonAjout" type="button" name="New" value="&{'application.enseignant.modifierNotes'}" onclick="window.location.href='@{EnseignantController.ajouteExamens(cours.id,randomID)}'">
+    			<input  class="buttonAjout" type="button" name="New" value="&{'application.enseignant.validerNotes'}" onclick="window.location.href='@{EnseignantController.ajouteExamens(cours.id,randomID)}'">
+    			#{/if}
+       		#{/if}
+		</div>
+    	
+	#{/list}	
 	</div>
   </fieldset>
   
