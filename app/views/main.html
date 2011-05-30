@@ -8,27 +8,11 @@
             href="@{'/public/stylesheets/main.css'}" />
 		#{get 'moreStyles' /}
 		<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="utf-8"></script>
-		<script src="@{'/public/javascripts/client.js'}" type="text/javascript" charset="utf-8"></script>		
-		<script src="http://www.google.com/jsapi" type="text/javascript"></script>
-		<script type="text/javascript">
-			google.load("language", "1");
-		</script>
-		
-		<script>
-						function googleTranslateElementInit() {
-						new google.translate.TranslateElement({
-							  pageLanguage: 'fr'
-						}, 'google_translate_element');}
-		</script>
-		<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-						
+		<script src="@{'/public/javascripts/client.js'}" type="text/javascript" charset="utf-8"></script>					
 		#{get 'moreScripts' /}
 	</head>
 
     <body>
-		<div id="google_translate_element"></div>
-		<div id="translation">
-		</div>
 		<div id="initial">
 			<div id="wrapper">
 				<div id="container">
@@ -73,12 +57,12 @@
 						</div>
 					</div>
 					<br />		
-					<select onchange="translate(this.options[this.selectedIndex].value);">
-						<option value="de">deutsch</option>
-						<option value="fr" onclick="original();">français</option>
-						<option value="en">english</option>
-						<option value="es">español</option>
-					</select>
+					<div id="translation">
+						<a href><img id="frenchTranslator" src="/public/images/flag_fr.jpeg"></img></a>
+						<a href><img id="englishTranslator" src="/public/images/flag_en.jpeg"></img></a>
+						<a href><img id="germanTranslator" src="/public/images/flag_de.jpeg"></img></a>
+						<a href><img id="spanishTranslator" src="/public/images/flag_es.jpeg"></img></a>
+					</div>
 					#{if typeUser != 'scolarite'}
 					<div id="feeds">
 						<div class="lthead" align="center"><span class="tphead">&{'application.feed.suscribe'}</span></div>

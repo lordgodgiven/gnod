@@ -79,7 +79,7 @@ public class Export extends Controller  {
 		
 		if (file == null || !file.exists()) {
 			flash.error("aucun flux RSS pour votre profil de connexion");
-			System.out.println("--------------Fic null ou n'existe pas");
+			System.out.println("Fic null ou n'existe pas");
 			Application.index();
 		}
         Document document = null;

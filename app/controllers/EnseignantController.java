@@ -192,4 +192,9 @@ public class EnseignantController extends Controller {
 				afficheResultats(idcours,idexam);
 			}			
 		}
+		
+		public static void translateInEnglish() {
+			System.out.println("--------Translate in english OKKKK");
+			renderJSON(new String("test"));
+		}
 }
