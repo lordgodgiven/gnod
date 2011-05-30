@@ -8,11 +8,23 @@
     #{list items:cours.classe.etudiant, as : 'etudiant'}
     	
     	<div class="divNotLink"> 
-	    	${etudiant.prenom} ${etudiant.nom} 
+    	    #{field 'Etudiant'+etudiant_index}
+			<p>
+			  <label>${etudiant.prenom} ${etudiant.nom}</label>
+			  <input type="text" id="${field.id}" name="${field.name}" value="${field.value}" class="${field.errorClass}">
+			  <span class="error">${field.error}</span>
+			</p>
+			#{/}
+	    	
 
 		</div>
     	
 	#{/list}	
+	</div>
+	
+	    
+    <div class="button">
+    	<input type="submit" value="Ajouter">
 	</div>
   </fieldset>
   

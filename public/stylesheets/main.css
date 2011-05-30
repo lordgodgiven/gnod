@@ -81,6 +81,20 @@ img{border:0;}
 	padding-left: 10px;
 	margin-bottom: 5px;
 	background-color: #B9EA71;
+	width : 500px;
+}
+.divNotLink input{
+	float:right;
+}
+
+.divNotLinkBlue{
+	border-left: thin;
+	border-left-style:solid;
+	border-left-color: black;
+	padding-left: 10px;
+	margin-bottom: 5px;
+	background-color: #1DC3B3;
+	width : 500px;
 }
 
 .divLink:hover{
