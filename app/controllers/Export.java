@@ -2,13 +2,17 @@ package controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import models.Cours;
 import models.Enseignant;
 import models.Etudiant;
+import models.Examen;
+import models.NewsFeedGen;
 import models.Scolarite;
 
 import org.w3c.dom.Document;
@@ -67,7 +71,7 @@ public class Export extends Controller  {
 			Enseignant enseignant = Enseignant.find("byLogin",
 					Security.connected()).first();
 			file = new File("public/rss/Enseignant_" +enseignant.prenom+ 
-					" " +enseignant.nom+ ".xml");
+					"_" +enseignant.nom+ ".xml");
 		} else if (renderArgs.get("typeUser").equals("etudiant")) {
 			Etudiant etudiant = Etudiant.find("byLogin",
 					Security.connected()).first();
@@ -77,10 +81,47 @@ public class Export extends Controller  {
 			Application.index();
 		}
 		
-		if (file == null || !file.exists()) {
-			flash.error("aucun flux RSS pour votre profil de connexion");
-			System.out.println("Fic null ou n'existe pas");
-			Application.index();
+		if (file == null || !file.exists()) {			
+			if (renderArgs.get("typeUser").equals("enseignant")) {
+				Enseignant enseignant = Enseignant.find("byLogin",
+						Security.connected()).first();
+				for (Cours coursTmp : enseignant.cours) {
+					for (Examen examenTmp : coursTmp.examen) {
+						if (!examenTmp.noteValidee) {
+							Date today = new Date();
+							if (today.after(examenTmp.date)
+									&& !NewsFeedGen.chercherExamen(enseignant,
+											examenTmp)) {
+								NewsFeedGen.generate("public/rss/Enseignant_"
+										+ enseignant.prenom + "_"
+										+ enseignant.nom + ".xml", "Examens des"
+										+ examenTmp.cours.classe.nomClasse + "de"
+										+ examenTmp.cours.matiere.nom + "a noter",
+										new String(enseignant.prenom + "_"
+												+ enseignant.nom));
+							}
+						}
+					}
+				}
+				// Aucune new A ajouter pour l'enseignant => creation factice
+				if (!file.exists()) {
+					NewsFeedGen.generate("public/rss/Enseignant_"
+										+ enseignant.prenom + "_"
+										+ enseignant.nom + ".xml", "Création du flux d'actualité",
+										new String(enseignant.prenom + "_"
+												+ enseignant.nom));
+				}
+			} else if (renderArgs.get("typeUser").equals("etudiant")) {
+				Etudiant etudiant = Etudiant.find("byLogin",
+						Security.connected()).first();
+				NewsFeedGen.generate("public/rss/Etudiant_"
+						+ etudiant.classe.nomClasse + ".xml", "Création du flux d'actualité",
+						etudiant.classe.nomClasse);
+			} else {
+				flash.error("aucun flux RSS pour votre profil de connexion");
+				System.out.println("Fic null ou n'existe pas");
+				Application.index();
+			}
 		}
         Document document = null;
 		try {	
