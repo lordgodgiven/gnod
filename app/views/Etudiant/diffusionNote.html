@@ -5,3 +5,8 @@ et pour l'examen selectionné (sur la page afficheMatiere.html)
 #{extends 'main.html' /}
 #{set title:'Diffusion' /}
 &{'application.etudiant.diffusion.titre', examen.nom, examen.cours.classe.nomClasse}
+
+#{list items:lstNote, as:'note'}
+<!--<li>A l'examen de : ${note.examen.nom}</li-->
+<li>${note.etudiant.prenom} ${note.etudiant.nom} a eu ${note.note}</li> 
+#{/list}

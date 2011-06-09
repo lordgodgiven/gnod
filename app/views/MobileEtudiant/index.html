@@ -1,0 +1,19 @@
+<!-- 
+- Charge les notes de l'élève pour tous les examens de l'année
+-->
+#{extends 'main_mobile.html' /}
+#{set title:'Accueil mobile' /}
+&{'application.accueil.etudiant'}
+
+<div class="toolbar">
+        <h1 id="pageTitle"></h1>
+        <a id="backButton" class="button" href="#"></a>
+    </div>
+        
+    <ul id="notes" title="Notes">
+        #{list items:notes, as:'note'}
+		<!--<li>A l'examen de : ${note.examen.nom}</li-->
+        <li>${note.note}</li> 
+        #{/list}
+    </ul>
+    

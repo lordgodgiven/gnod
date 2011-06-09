@@ -68,11 +68,13 @@ Note(note1):
     etudiant : etudiant1
     examen :   examen1
     note :   14
+    estDiffusee : false
 
 Note(note2):
     etudiant :   etudiant2
     examen :     examen1
     note :       11
+    estDiffusee : true
 
 Examen(examen2):
     nom :        Examen de programmation web semestre 2

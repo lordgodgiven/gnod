@@ -22,12 +22,12 @@ public class Note extends Model {
 	public Integer note;
 	
 	@Required
-	public boolean isDisffused;
+	public boolean estDiffusee;
 	
 	public Note(Etudiant etudiant, Examen examen, Integer note) {
 		this.etudiant = etudiant;
 		this.examen = examen;
 		this.note = note;
-		this.isDisffused = false;
+		this.estDiffusee = false;
 	}
 }
