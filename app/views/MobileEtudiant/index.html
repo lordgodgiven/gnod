@@ -10,10 +10,9 @@
         <a id="backButton" class="button" href="#"></a>
     </div>
         
-    <ul id="notes" title="Notes">
-        #{list items:notes, as:'note'}
-		<!--<li>A l'examen de : ${note.examen.nom}</li-->
-        <li>${note.note}</li> 
+	<ul id="notes" title="Notes">
+        #{list items:etudiant.notes, as:'note'}
+		<li><a href="@{MobileController.diffusionNote(note.examen.id)}">A l'examen de : ${note.examen.nom} ta note est de ${note.note}</a></li> 
         #{/list}
-    </ul>
+	</ul>
     

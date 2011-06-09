@@ -94,12 +94,14 @@ Note(note3):
     etudiant : etudiant1
     examen :   examen3
     note :   10
-
+    estDiffusee : false
+    
 Note(note4):
     etudiant :   etudiant2
     examen :     examen3
     note :       7
-
+    estDiffusee : false
+    
 Examen(examen4):
     nom :        Examen de C de TP
     cours :      cours2
@@ -111,12 +113,14 @@ Note(note5):
     etudiant : etudiant1
     examen :   examen4
     note :   18
-
+    estDiffusee : true
+    
 Note(note6):
     etudiant :   etudiant2
     examen :     examen4
     note :       17   
- 
+    estDiffusee : true
+    
 Examen(examen5):
     nom :        Examen de C
     cours :      cours2
@@ -128,8 +132,10 @@ Note(note7):
     etudiant : etudiant1
     examen :   examen5
     note :   18
-
+    estDiffusee : false
+    
 Note(note8):
     etudiant :   etudiant2
     examen :     examen5
-    note :       17   
+    note :       17
+    estDiffusee : false
