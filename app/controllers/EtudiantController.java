@@ -1,7 +1,9 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import models.Cours;
 import models.Etudiant;
@@ -41,7 +43,7 @@ public class EtudiantController extends Controller {
 				.first();
 		// Avec la classe de l'étudiant, on retrouve les cours, et donc les
 		// matieres correspondantes
-		render("etudiant/index.html", etudiant.classe);
+		render("etudiant/index.html", etudiant);
 	}
 
 	/**
@@ -64,7 +66,7 @@ public class EtudiantController extends Controller {
 	 */
 	public static void diffuseNote(long id) {
 		Note note = Note.findById(id);
-		note.isDisffused = true;
+		note.estDiffusee = true;
 		note.save();
 		// Apres diffusion, on retourne sur la page qui proposent la detail
 		// du cours
@@ -90,13 +92,23 @@ public class EtudiantController extends Controller {
 		Examen examen = Examen.findById(id);
 		List<Note> lstNote = new ArrayList<Note>();
 		for (Note noteTmp : examen.notes) {
-			if (noteTmp.isDisffused) {
+			if (noteTmp.estDiffusee) {
+				lstNote.add(noteTmp);
+			}
+		}
+		// En securite (pour eviter les failles de l'appli mobile, on ajoute la note
+		// de l'eleve consultant a la liste de note
+		Etudiant etudiant = Etudiant.find("byLogin", Security.connected()).first();
+		for (Note noteTmp : etudiant.notes) {
+			if (noteTmp.examen == examen && noteTmp.estDiffusee == false) {
+				noteTmp.estDiffusee = true;
+				noteTmp.save();
 				lstNote.add(noteTmp);
 			}
 		}
 		// On renvoit la liste des notes a afficher : possibilite d'acceder
 		// au proprietaire 
-		render(lstNote);
+		render("etudiant/diffusionNote.html", examen, lstNote);
 	}
 		
 	
