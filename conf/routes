@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                                       Application.index
+POST    /passerellegoogle/translateindeutsch    PasserelleGoogle.translateInDeutsch
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

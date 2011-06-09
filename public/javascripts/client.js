@@ -1,13 +1,14 @@
 
 function translateToFr() {
 	alert('translate in Fr');
-		$.ajax({
+	$.ajax({
 		url: '/passerellegoogle/translateinfrench',
 		context: document.body,
+		cache:false,
+		dataType: "json",
 		success: function(){
-		//$(this).addClass("done");
-		alert('Fonction appelée');
-	  }
+			alert('Fonction appelï¿½e');
+		}
 	});
 }
 
@@ -16,63 +17,115 @@ function translateToEn() {
 	$.ajax({
 		url: '/passerellegoogle/translateinenglish',
 		context: document.body,
+		cache:false,
+		dataType: "json",
 		success: function(){
-		//$(this).addClass("done");
-		alert('Fonction appelée');
+		alert('Fonction appelee');
 	  }
+	});
+}
+
+function translateFFS() {
+
+	//var germanTranslator = #{jsAction @PasserelleGoogle.translateInDeutsch(':doc') /}
+
+	var germanTranslator = function(options) {var pattern = '/passerellegoogle/translateindeutsch?doc=:doc'; for(key in options) { pattern = pattern.replace(':'+key, options[key]); } return pattern }
+	
+//	$.post(germanTranslator,{'doc': document.body.innerHTML})
+//		.success(function(data) {
+//			alert(data);
+//			$(events).each(function() {
+//				alert(this.data);
+//			})
+//		})
+//		.error(function(data) {
+//			alert("fucku");
+//		});
+	var doc = 'salut';
+	alert("a envoyer " +doc);
+	$.ajax({
+		type: 'POST',
+		data: doc,
+		url: '/passerellegoogle/translateindeutsch',
+		success: function(data) {
+			alert(data);
+			$(events).each(function() {
+				alert(this.data);
+			})
+		},
+		error: function(e) {
+			alert("ERROR : "+e);
+		},
+		dataType: 'text'
 	});
 }
 
 function translateToDe() {
-	alert('translate in De');
+	var doc = document.body.innerHTML;
+	alert('youhou ' +doc);
 	$.ajax({
-		url: '/passerellegoogle/translateindeutsch',
-		context: document.body,
-		success: function(){
-		//$(this).addClass("done");
-		alert('Fonction appelée');
-	  }
+		type: "POST",
+		url: "/passerellegoogle/translateindeutsch",
+		data: doc,
+		cache:false,
+		dataType: "json",
+		processData: false,
+		success: function(msg){
+		   alert( "Reussite. YOUHOUUUUUUUUU " +msg);
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+             alert(errorThrown);
+             alert(XMLHttpRequest);
+             alert(textStatus);
+			 }
 	});
+	// Ce qui marche 
+/*
+$.ajax({type: "POST", url: "/Application/recup_liste_etudiant", data: param, dataType: "json",
+               success: function(json){
+                       alert('Reussite');
+               },
+               error: function(XMLHttpRequest, textStatus, errorThrown) {
+                       alert('Erreur; ca ne fonctionne pas');
+                       alert(errorThrown);
+                       alert(XMLHttpRequest);
+                       alert(textStatus);
+               }
+          });*/	
+		  
+	//$.getJSON("http://localhost:9000/passerellegoogle/translateindeutsch.html",
+	/*$.getJSON("@{PasserelleGoogle.translateInDeutsch()}",
+	{"action" : "objectifs",
+	"page_html" : page_html },
+	function() {
+		$.each(function() {
+			alert('reception ok');
+		});
+	});*/
+	
 }
 
 function translateToEs() {
 	alert('translate in Es');
+	var cpt;
+	var racine = document.getElementById("initial");
+	var child = racine.childNodes;
+	//for (
 	$.ajax({
-		url: '/passerellegoogle/translateinspanish',
-		context: document.body,
+		//url: '/passerellegoogle/translateinspanish',
+		//url: '@{PasserelleGoogle.translateInDeutsch()}',
+		//url: '/passerellegoogle/translateinspanish.html',
+		url: '/PasserelleGoogle/translateInSpanish',
+		data: racine,
+		//context: document.body,
+		cache:false,
+		dataType: "json",
 		success: function(){
-		//$(this).addClass("done");
-		alert('Fonction appelée');
+		alert('Fonction appelï¿½e');
 	  }
 	});
 }
 
- function translate(lang) {
-   var source = document.getElementById("initial").innerHTML;
-   var len = source.length;
-
-   // Google Language API accepts 500 characters per request 
-   var words = 500;
-
-   // This is for English pages, you can change the
-   // sourcelang variable for other languages
-   var sourcelang = "fr";
-   document.getElementById("translation").innerHTML = "";
-
-   for(i=0; i<=(len/words); i++) {
-     google.language.translate (source.substr(i*words, words),
-                 "fr", lang, function (result) {
-     if (!result.error) {
-     document.getElementById("translation").innerHTML
-           = document.getElementById("translation").innerHTML
-           + result.translation;
-    } }); }  
-
-  // Hide the text written in the original language
-  document.getElementById("initial").style.display = 'none';
-  return false;
- }
- 
 function original() {
   document.getElementById("translation").style.display='none';
   document.getElementById("initial").style.display = 'block';
@@ -85,7 +138,9 @@ function original() {
 		}, 'translation');
 }
 
+ 
 $("#frenchTranslator").live("click", function(){ translateToFr();});
 $("#englishTranslator").live("click", function(){ translateToEn();});
 $("#spanishTranslator").live("click", function(){ translateToEs();});
-$("#germanTranslator").live("click", function(){ translateToDe();});
+$("#germanTranslator").live("click", function(){ translateFFS();});
+
