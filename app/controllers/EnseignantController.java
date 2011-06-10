@@ -14,6 +14,7 @@ import models.Examen;
 import models.Matiere;
 import models.NewsFeedGen;
 import models.Note;
+import models.PasserelleGoogle;
 import play.Play;
 import play.cache.Cache;
 import play.data.validation.Required;
@@ -193,8 +194,22 @@ public class EnseignantController extends Controller {
 			}			
 		}
 		
-		public static void translateInEnglish() {
-			System.out.println("--------Translate in english OKKKK");
-			renderJSON(new String("test"));
+		
+		public static void translateInEnglish(String document) {
+			PasserelleGoogle.translateInEnglish(document);
+		}
+		
+		public static void translateInSpanish(String document) {
+			PasserelleGoogle.translateInSpanish(document);
+		}
+		
+		public static void translateInDeutsch(String document) {
+			System.out.println("taille du document dans etudiantcontroller:");
+			System.out.println(document.length());
+			renderJSON(PasserelleGoogle.translateInDeutsch(document));
+		}
+		
+		public static void translateInFrench(String document) {
+			renderText(PasserelleGoogle.translateInFrench(document));
 		}
 }

@@ -5,11 +5,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.w3c.dom.Document;
+
+import com.google.api.translate.Language;
+import com.google.api.translate.Translate;
+
 import models.Cours;
 import models.Etudiant;
 import models.Examen;
 import models.Matiere;
 import models.Note;
+import models.PasserelleGoogle;
 import models.Scolarite;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -111,5 +117,21 @@ public class EtudiantController extends Controller {
 		render("etudiant/diffusionNote.html", examen, lstNote);
 	}
 		
+	public static void translateInEnglish(String document) {
+		PasserelleGoogle.translateInEnglish(document);
+	}
 	
+	public static void translateInSpanish(String document) {
+		PasserelleGoogle.translateInSpanish(document);
+	}
+	
+	public static void translateInDeutsch(String document) {
+		System.out.println("taille du document dans etudiantcontroller:");
+		System.out.println(document.length());
+		renderJSON(PasserelleGoogle.translateInDeutsch(document));
+	}
+	
+	public static void translateInFrench(String document) {
+		renderText(PasserelleGoogle.translateInFrench(document));
+	}
 }

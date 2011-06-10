@@ -9,6 +9,7 @@ import models.Cours;
 import models.Enseignant;
 import models.Etudiant;
 import models.Matiere;
+import models.PasserelleGoogle;
 import models.Scolarite;
 import play.data.validation.Required;
 import play.mvc.Before;
@@ -653,4 +654,23 @@ public class ScolariteController extends Controller {
     	matiere.save();
     	ScolariteController.listeMatieres();
     }
+    
+	
+	public static void translateInEnglish(String document) {
+		PasserelleGoogle.translateInEnglish(document);
+	}
+	
+	public static void translateInSpanish(String document) {
+		PasserelleGoogle.translateInSpanish(document);
+	}
+	
+	public static void translateInDeutsch(String document) {
+		System.out.println("taille du document dans etudiantcontroller:");
+		System.out.println(document.length());
+		renderJSON(PasserelleGoogle.translateInDeutsch(document));
+	}
+	
+	public static void translateInFrench(String document) {
+		renderText(PasserelleGoogle.translateInFrench(document));
+	}
 }
