@@ -4,8 +4,19 @@ et pour l'examen selectionné
 -->
 #{extends 'main_mobile.html' /}
 #{set title:'Diffusion' /}
-&{'application.etudiant.diffusion.titre', examen.nom, examen.cours.classe.nomClasse}
 
+	<div class="toolbar">
+        <h1 id="pageTitle">&{'application.etudiant.diffusion.titre', examen.nom, examen.cours.classe.nomClasse}</h1>
+		
+		
+		<a id="backButtonBis" class="button" href="@{MobileController.index()}" target="_self">
+			<img src="/public/javascripts/iui/backButton.png"></img>
+		</a>
+		 <a id="backButton" class="button" href="@{MobileController.index()}" target="_self"></a>
+    </div>
+
+<ul id="home" title="Notes" selected="true">
 #{list items:lstNote, as:'note'}
 <li>${note.etudiant.prenom} ${note.etudiant.nom} a eu ${note.note}</li> 
 #{/list}
+</ul>

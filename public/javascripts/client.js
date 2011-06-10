@@ -63,7 +63,7 @@ function translateFFS() {
 function translateToDe() {
 	var doc = document.body.innerHTML;
 	alert('youhou ' +doc);
-	$.ajax({
+	/*$.ajax({
 		type: "POST",
 		url: "/passerellegoogle/translateindeutsch",
 		data: doc,
@@ -78,7 +78,12 @@ function translateToDe() {
              alert(XMLHttpRequest);
              alert(textStatus);
 			 }
-	});
+	});*/
+	$.post('translateInDeutsch',{document: doc}, 
+			function(ta_variable_de_retour){
+				alert('success' +ta_variable_de_retour);
+			}
+	);
 	// Ce qui marche 
 /*
 $.ajax({type: "POST", url: "/Application/recup_liste_etudiant", data: param, dataType: "json",
@@ -142,5 +147,5 @@ function original() {
 $("#frenchTranslator").live("click", function(){ translateToFr();});
 $("#englishTranslator").live("click", function(){ translateToEn();});
 $("#spanishTranslator").live("click", function(){ translateToEs();});
-$("#germanTranslator").live("click", function(){ translateFFS();});
+$("#germanTranslator").live("click", function(){ translateToDe();});
 
