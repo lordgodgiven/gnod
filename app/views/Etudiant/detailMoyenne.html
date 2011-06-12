@@ -5,3 +5,22 @@
 #{extends 'main.html' /}
 #{set title:'DetailMoyenne' /}
 &{'application.etudiant.detail.moyenne'}
+
+<table class="tableNote">
+        #{list items:lstCours, as:'cours'}
+		<tr>
+			<td><div class="divNotLink">${cours.matiere.nom}</div> </td>
+			#{list items:cours.examen, as:'examen'}
+			#{list items:examen.notes, as:'note'}
+				#{if note.etudiant == etudiant}
+				<td style="width:50px;"><div class="divNotLinkBlue" title="${examen.nom}" style="width:50px;"> ${note.note}</div></td> 
+				#{/if}
+	        #{/list}
+	        #{/list}
+	    </tr>        
+        #{/list}
+</table>
+<br/>
+<table class="tableNote">
+	<tr><td><div class="divNotLinkBlue"> Moyenne generale</div></td><td><div class="divNotLink" title="Moyenne generale" style="width:50px;"> ${etudiant.calculMoyenneGenerale()}</div></td></tr>
+</table>

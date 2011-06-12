@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Cours;
 import models.Enseignant;
 import models.Etudiant;
 import models.Examen;

@@ -6,6 +6,8 @@ et pour l'examen selectionné (sur la page afficheMatiere.html)
 #{set title:'Diffusion' /}
 &{'application.etudiant.diffusion.titre', examen.nom, examen.cours.classe.nomClasse}
 
+<table id="home" >
 #{list items:lstNote, as:'note'}
-<li>${note.etudiant.prenom} ${note.etudiant.nom} a eu ${note.note}</li> 
+<tr><td><div class="divNotLink">${note.etudiant.prenom} ${note.etudiant.nom}</div> </td><td><div class="divNotLinkBlue" style="width:50px;"> ${note.note}</div></td></tr> 
 #{/list}
+</table>

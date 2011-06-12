@@ -20,9 +20,9 @@ application.enseignant.nouvelExam=Nouvel examen
 application.accueil.scolarite=Accueil scolarité :
 
 #clés des étudiants
-application.accueil.etudiant=Accueil étudiant :
+application.accueil.etudiant=Notes :
 #Syntaxe des clés à vérifier
-application.etudiant.diffusion.titre=Note de &{%s} de la classe &{%s} :
+application.etudiant.diffusion.titre=Notes >> &{%s} >> Classe &{%s} :
 application.etudiant.detail.matiere=Détail de &{%s} :
 application.etudiant.detail.moyenne=Détail de la moyenne :
 application.etudiant.feed.suscribe=Flux RSS des nouvelles notes
