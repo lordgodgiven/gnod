@@ -105,10 +105,11 @@ public class EnseignantController extends Controller {
 		    String date = day + "-" + month + "-" + year;
 		     formatter = new SimpleDateFormat("dd-MM-yy");
 		     try {
-				dateExam = (Date)formatter.parse(date);
+		    dateExam = (Date)formatter.parse(date);
+		    System.out.println(dateExam);
 		    Examen examen = new Examen(nom, dateExam, coef, cours);
 		    examen.save();
-			} catch (ParseException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				 flash.error("Erreur : " + e);
 			     render("Enseignant/ajouteExamens.html", cours, randomID);

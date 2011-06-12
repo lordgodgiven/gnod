@@ -86,7 +86,14 @@ public class EtudiantController extends Controller {
 		Etudiant etudiant = Etudiant.find("byLogin", Security.connected())
 				.first();
 		renderArgs.put("general", etudiant.calculMoyenneGenerale());
-		render(etudiant.calculMoyenneDetailee());
+		List<Cours> lstCours = new ArrayList<Cours>();
+		for (Object coursTmp : Cours.all().fetch()) {
+			if (((Cours)coursTmp).classe.equals(etudiant.classe)) {
+				lstCours.add((Cours)coursTmp);
+			}
+		}
+		
+		render("etudiant/detailMoyenne.html",etudiant,lstCours);
 
 	}
 

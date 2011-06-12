@@ -8,8 +8,8 @@
 #{set title:'Accueil' /}
 &{'application.accueil.etudiant'}
 
-<ul id="notes" title="Notes">
+<table class="tableNote">
         #{list items:etudiant.notes, as:'note'}
-		<li><a href="@{EtudiantController.diffusionNote(note.examen.id)}">A l'examen de : ${note.examen.nom} ta note est de ${note.note}</a></li> 
+		<tr><td><div class="divLink" onclick="window.location.href = '@{EtudiantController.diffusionNote(note.examen.id)}'">${note.examen.cours.matiere.nom} >> ${note.examen.nom}</div> </td><td><div class="divNotLinkBlue" style="width:50px;"> ${note.note}</div></td></tr> 
         #{/list}
-</ul>
+</table>
