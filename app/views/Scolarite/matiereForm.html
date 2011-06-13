@@ -2,3 +2,43 @@
 - Saisie du nom de la matiere a creer.
 - balise flash.error dans le cas ou la matiere existe deja.
 -->
+
+#{extends 'main.html' /}
+
+<form action="@{ScolariteController.postMatieres(id,nom,randomID)}" method="GET">
+  <fieldset class="outsideField">
+#{if matiere != null}	
+    <legend><a href="@{ScolariteController.listeMatieres()}">Matiere</a> : ${matiere.nom}</legend>
+#{/if}
+#{if matiere == null}	
+    <legend><a href="@{ScolariteController.listeMatieres()}">Matiere</a> : Ajout matiere</legend>
+#{/if}
+
+
+#{if matiere != null}	
+	<input type="hidden" name="id" value="${matiere.id}">
+#{/if}
+	<input type="hidden" name="randomID" value="${randomID}">
+
+    
+    #{field 'Nom'}
+	<p>
+	  <label>&{field.name}</label>
+	  <input type="text" id="${field.id}" name="nom" value="#{if matiere != null}${matiere.nom}#{/if}" class="${field.errorClass}">
+	  <span class="error">${field.error}</span>
+	</p>
+	#{/}
+    
+    <div class="button">
+#{if matiere == null}	
+    	<input type="submit" value="Ajouter">
+#{/if}	
+#{if matiere != null}	
+    	<input type="submit" value="Modifier">
+#{/if}	
+	</div>
+  </fieldset>
+  
+  
+
+</form>

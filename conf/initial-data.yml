@@ -52,7 +52,7 @@ Etudiant(etudiant2):
     
 Matiere(progWeb):
     nom : Programmation web
-   
+
 Matiere(C):
     nom : Langage C et compilation
 
@@ -60,7 +60,67 @@ Matiere(Sap):
     nom : Semantique et analyse des programmes
 
 Matiere(Algo):
-    nom : Algorithmique avancee
+    nom : Algorithmique avancee1
+
+Matiere(Algo2):
+    nom : Algorithmique avancee2
+
+Matiere(Algo3):
+    nom : Algorithmique avancee3
+
+Matiere(Algo4):
+    nom : Algorithmique avancee4
+
+Matiere(Algo5):
+    nom : Algorithmique avancee5
+
+Matiere(Algo6):
+    nom : Algorithmique avancee6
+
+Matiere(Algo7):
+    nom : Algorithmique avancee7
+
+Matiere(Algo8):
+    nom : Algorithmique avancee8
+
+Matiere(Algo9):
+    nom : Algorithmique avancee9
+
+Matiere(Algo10):
+    nom : Algorithmique avancee10
+
+Matiere(Algo11):
+    nom : Algorithmique avancee11
+
+Matiere(Algo12):
+    nom : Algorithmique avancee12
+
+Matiere(Algo13):
+    nom : Algorithmique avancee13
+
+Matiere(Algo14):
+    nom : Algorithmique avancee14
+
+Matiere(Algo15):
+    nom : Algorithmique avancee15
+
+Matiere(Algo16):
+    nom : Algorithmique avancee16
+
+Matiere(Algo17):
+    nom : Algorithmique avancee17
+
+Matiere(Algo18):
+    nom : Algorithmique avancee18
+
+Matiere(Algo19):
+    nom : Algorithmique avancee119
+
+Matiere(Algo20):
+    nom : Algorithmique avancee220
+
+Matiere(Algo21):
+    nom : Algorithmique avancee21
 
 Cours(cours1):
     enseignant :  viardots
