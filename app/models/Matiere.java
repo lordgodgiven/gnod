@@ -72,10 +72,10 @@ public class Matiere extends Model {
 			Matiere matiereTmp = itMatiere.next();
 			if (!trouve && matiereTmp.id == idLastMatiere) {
 				trouve = true;
-				matieres.add(itMatiere.next());
+				matieres.add(matiereTmp);
 				cptMatiere++;
 			} else if (trouve) {
-				matieres.add(itMatiere.next());
+				matieres.add(matiereTmp);
 				cptMatiere++;
 			}
 		}
@@ -91,11 +91,11 @@ public class Matiere extends Model {
 		List<Matiere> allMatieres = Matiere.find("order by nom asc").fetch();
 		// On veut les 20 premiers
 		List<Matiere> matieres = new ArrayList<Matiere>();
-		int cptAll = -1, cptMatiere = 0;
+		int cptAll = allMatieres.size() - 1, cptMatiere = 0;
 		// A vrai lorsque la matiere en paramtre est trouvee dans la liste
 		boolean trouve = false;
-		while (!trouve && cptAll < allMatieres.size() - 1) {
-			cptAll++;
+		while (!trouve && cptAll > -1) {
+			cptAll--;
 			trouve = (allMatieres.get(cptAll).id == idPremMatiere);
 		}
 		// On veut garder l'ordre de la liste initiale
@@ -120,6 +120,7 @@ public class Matiere extends Model {
 	 * @return true si le nom est deja pris, false sinon
 	 */
 	public static boolean exist(String nom) {
-		return (Matiere.find("byNom", nom) != null);
+		System.out.println(Matiere.find("byNom", nom));
+		return (!Matiere.find("byNom", nom).fetch().isEmpty());
 	}
 }

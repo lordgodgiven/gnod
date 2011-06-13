@@ -553,10 +553,11 @@ public class ScolariteController extends Controller {
 	 * */
 	public static void listeMatieres() {
 		List<Matiere> liste20Matieres = Matiere.find20Matieres();
+		
 		// Booleens pour savoir si un appel a previous/next est possible
 		renderArgs.put("previous", false);
 		renderArgs.put("next", (Matiere.findAll().size() > 20));
-		render(liste20Matieres);
+		render("Scolarite/listeMatieres.html",liste20Matieres);
 	} 
 	
 	/**
@@ -609,9 +610,9 @@ public class ScolariteController extends Controller {
     public static void matiereForm(Long idMatiere) {    	
         if(idMatiere != null) {
         	Matiere matiere = Matiere.findById(idMatiere);
-            render(matiere);
+            render("Scolarite/matiereForm.html",matiere);
         }
-        render();
+        render("Scolarite/matiereForm.html");
     }
     
     /**
@@ -624,23 +625,23 @@ public class ScolariteController extends Controller {
 	        		String randomID) {
     	if(validation.hasErrors()) {
 	    	flash.error("Formulaire invalide");
-	    	Matiere matierePrecharge = null;	 
+	    	Matiere matiere = null;	 
     		if (id > 0)
-    			matierePrecharge = Matiere.findById(id);
+    			matiere = Matiere.findById(id);
     		else
-    			matierePrecharge = new Matiere(nom);
-	        render("Scolarite/matiereForm.html", matierePrecharge, randomID);
+    			matiere = new Matiere(nom);
+	        render("Scolarite/matiereForm.html", matiere, randomID);
 	    }
     	if (Matiere.exist(nom)) {
-    		flash.error("Le nom de votre matiere est déjà utilisé");
-    		Matiere matierePrecharge = null;
+    		flash.error("Le nom "+nom+" est déjà utilisé");
+    		Matiere matiere = null;
  
     		if (id > 0)
-    			matierePrecharge = Matiere.findById(id);
+    			matiere = Matiere.findById(id);
     		else
-    			matierePrecharge = new Matiere(nom);
+    			matiere = new Matiere(nom);
     		
-	        render("Scolarite/matiereForm.html", matierePrecharge, randomID);
+	        render("Scolarite/matiereForm.html", matiere, randomID);
     	}
     	Matiere matiere = null;
     	if (id > 0) {

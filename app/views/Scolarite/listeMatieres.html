@@ -3,3 +3,63 @@
 - Lien de creation d'une matiere
 - Propose un champ de recherche pour trouver une matiere a partir de son nom
 -->
+
+#{extends 'main.html' /}
+
+<form>
+  <fieldset class="outsideField">
+    <legend>&{'application.menu.matiere'}</legend>
+
+    <div  class="buttonAjout">
+    	<input type="button" name="New" value="Ajouter une matiere" onclick="window.location.href='@{ScolariteController.matiereForm()}'">
+	</div>
+
+
+    <table>
+    #{list items:liste20Matieres, as : 'matiere'}
+    	<tr><td>
+    	<div class="divLink" onclick="window.location.href = '@{ScolariteController.matiereForm(matiere.id)}'">  ${matiere.nom} </li>
+		</td></tr>
+	#{/list}
+	</table>
+
+ <table id="pagination">
+ <tr>
+    #{if previous}
+    	#{list items:liste20Matieres, as : 'matiere'}
+    		#{if matiere_isFirst}
+		        <td id="previous">
+		            <a href="@{ScolariteController.listePreviousMatieres(matiere.id)}">
+		                Previous
+		            </a>
+		        </td>
+    		#{/if}
+    	#{/list}
+    #{/if}
+    #{if next}
+    
+    	#{list items:liste20Matieres, as : 'matiere'}
+    		#{if matiere_isLast}
+		        <td id="next">
+		            <a href="@{ScolariteController.listeNextMatieres(matiere.id)}">
+		                Next
+		            </a>
+		        </td>
+    		#{/if}
+   	 #{/list}
+    #{/if}
+</tr>
+</table> 
+
+</fieldset>
+  
+</form>
+
+
+
+
+
+
+
+
+
